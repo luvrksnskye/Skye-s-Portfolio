@@ -1,0 +1,1018 @@
+@font-face {
+  font-family: 'kawaii';
+  src: url('assets/fonts/PixelifySans-Regular.ttf') format('woff');
+}
+
+.body {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100vh;
+}
+
+.fixed-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url('assets/morning.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #FFF5F8; 
+  z-index: -1;
+}
+
+#s-m-t-tooltip {
+  padding: 0.5em 1em;
+  background: #ffc2cc;
+  color: #ffffff;
+  font-family: "kawaii", serif;
+  font-size: 1.1em;
+  border-radius: 1em;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+  z-index: 999999;
+}
+
+/* Body Styles */
+body ::selection {
+  background: #ffd0da;
+}
+
+img[src="assets/puppy.gif"] {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 50px; 
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  z-index: 1000;
+}
+
+/* Badge styles */
+.badge {
+  position: fixed;
+  bottom: 20px;
+  left: 80px; /* Position to the right of the puppy */
+  width: 40px;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+@keyframes badge-jump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.badge-jump {
+  animation: badge-jump 1s ease infinite;
+}
+
+@keyframes jump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
+
+.jump {
+  animation: jump 0.5s ease;
+}
+
+
+:root {
+  /* Updated color palette to soft pink tones */
+  --skye-inactive-color: #FFF0F5;
+  --skye-outer-color: #FFDAE5;
+  --skye-inner-color: #FFEEF2;
+  --skye-border-color: #FFAEC6;
+  --skye-window-text-color: #FF6B99;
+  --skye-window-text-back: #FFFAFC;
+  --skye-username-color: #FF8FAB;
+  --skye-button-color: #FFE6EE;
+  --skye-task-color: #FFEAF0;
+  --skye-scrollbar-inner-color: #FFCAD8;
+  --skye-scrollbar-inner-hover-color: #FFAEC6;
+  --skye-scrollbar-outer-color: #FFEEF2;
+}
+
+body {
+  color: var(--skye-window-text-color);
+  /*font-family: "MS ui gothic";*/
+  /*font-size: 17px;*/
+  font-size: 18px;
+}
+
+.window {
+  border: 2px solid var(--skye-border-color);
+  background: var(--skye-inactive-color);
+  padding: 4px;
+  padding-bottom: 16px;
+  box-shadow: 4px 4px 10px rgba(255, 174, 198, 0.3);
+  padding-bottom: 0;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.window::after {
+  content: url('assets/window_bottom.png');
+  display: block;
+  margin-bottom: -4px;
+}
+
+
+.window .title {
+  border: 2px solid var(--skye-border-color);
+  background: var(--skye-inactive-color);
+  color: var(--skye-window-text-color);
+  /*font-family: "MS ui gothic";*/
+  image-rendering: pixelated;
+  font-weight: bold;
+  /*font-size: 17px;*/
+  height: 22px;
+  border-radius: 7px;
+  margin-bottom: 2px;
+  
+  /*display: flex;
+  align-items: center;
+  justify-content: space-between;*/
+}
+
+.window .title span {
+  /*flex: 1;*/
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  top: 2px;
+}
+
+.active .title {
+  background: var(--skye-inner-color);
+}
+
+.title {
+  pointer-events: none;
+}
+
+/* Default icon for windows */
+.title::before {
+  content: "";
+  float: left;
+  padding-right: 2px;
+  width: 22px;
+  height: 22px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Different icons for different windows */
+.window-about .title::before {
+  background-image: url('assets/bio.png');
+}
+
+.window-projects .title::before {
+  background-image: url('assets/folder.png');
+}
+
+.window-skills .title::before {
+  background-image: url('assets/warning.png');
+}
+
+.window-contact .title::before {
+  background-image: url('assets/heart.png');
+}
+
+.window-education .title::before {
+  background-image: url('assets/folder.png');
+}
+
+.window-interests .title::before {
+  background-image: url('assets/smile.png');
+}
+
+
+.window-stats .title::before {
+  background-image: url('assets/heart.png');
+}
+
+.window-stats {
+  width: 350px;
+  margin-left: -60px;
+  position: relative;
+  margin-top: 20px; 
+}
+
+  .window-me .title::before {
+    background-image: url('assets/heart.png');
+  }
+  
+  .window-me {
+    width: 350px;
+    margin-right: -60px;
+    position: relative;
+    margin-top: 20px; 
+  }
+.title::after {
+  content: url('assets/window_buttons2.png');
+  float: right;
+  pointer-events: all;
+  
+  /*display:flex;
+  flex-direction:row;
+  align-items: center;
+  justify-content: center;*/
+}
+
+.subtitle {
+  color: var(--skye-window-text-color);
+  /*font-family: "MS ui gothic";*/
+  image-rendering: pixelated;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.window .content {
+  border: 2px solid var(--skye-border-color);
+  background: var(--skye-window-text-back);
+  color: var(--skye-window-text-color);
+  /*font-family: "MS ui gothic";*/
+  image-rendering: pixelated;
+  /*font-size: 17px;*/
+  margin-top: 4px;
+  padding: 8px;
+  border-radius: 7px;
+}
+
+.button {
+  color: var(--skye-window-text-color);
+  /*font-family: "MS ui gothic";*/
+  image-rendering: pixelated;
+  /*font-size: 16px;*/
+  font-size: inherit;
+  font-family: 'kawaii', sans-serif;
+  /*color: var(--skye-window-text-color);
+  background: var(--skye-button-color);
+  border: 2px outset var(--skye-button-color);*/
+  /*padding: 4px;*/
+  text-align: center;
+  
+  border: 4px solid transparent;
+  border-image: url(assets/button.png) 4 fill repeat;
+  border-radius: 8px;
+  padding: 5px 10px;
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.05);
+}
+
+.border {
+  border: 2px solid var(--skye-border-color);
+  border-radius: 7px;
+}
+
+.fit-content {
+  width: max-content;
+  height: max-content;
+}
+
+/* Add custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--skye-scrollbar-outer-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--skye-scrollbar-inner-color);
+  border-radius: 10px;
+  border: 2px solid var(--skye-scrollbar-outer-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--skye-scrollbar-inner-hover-color);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 60px 40px 40px 40px;
+  min-height: 100vh;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 320px;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 320px;
+}
+
+
+.window .content,
+.window .title,
+.window .subtitle,
+.button {
+  font-family: 'kawaii', sans-serif;
+}
+
+
+.larger-window {
+  width: 400px;
+}
+
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--skye-border-color);
+  border-radius: 4px;
+  background-color: var(--skye-window-text-back);
+  cursor: pointer;
+  position: relative;
+  margin-right: 8px;
+}
+
+input[type="checkbox"]:checked::before {
+  content: "✓";
+  display: block;
+  color: var(--skye-window-text-color);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+}
+
+/* Task item styling */
+.task-item {
+  background-color: var(--skye-task-color);
+  padding: 10px; 
+  border-radius: 6px;
+  margin-bottom: 10px; 
+  border-left: 3px solid var(--skye-border-color);
+  overflow: hidden; 
+}
+
+
+.task-item img {
+  max-width: 100%;
+  border-radius: 5px;
+  margin: 8px 0;
+  border: 2px solid var(--skye-border-color);
+  box-shadow: 0 2px 6px rgba(255, 174, 198, 0.2);
+  transition: transform 0.2s ease;
+  display: block; 
+}
+
+.task-item img:hover {
+  transform: scale(1.02);
+}
+
+
+.window {
+  background: linear-gradient(to bottom right, var(--skye-inactive-color), var(--skye-outer-color));
+}
+
+
+.active {
+  box-shadow: 0 0 15px rgba(255, 174, 198, 0.3);
+}
+
+
+.window .content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--skye-border-color), transparent);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Improve task list styling */
+ul {
+  list-style-type: none;
+  padding-left: 10px;
+}
+
+li {
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 10px; 
+}
+
+li::before {
+  content: url("assets/icon_gear.png");
+  position: absolute;
+  left: -14px;
+  transform: scale(0.5); 
+  display: inline-block;
+  width: 10px; 
+  height: 10px;
+  image-rendering: pixelated;
+}
+
+
+.window .content {
+  box-shadow: inset 0 0 8px rgba(255, 174, 198, 0.1);
+  overflow: hidden; 
+}
+
+html, body, * {
+  cursor: url('assets/cursor.png'), auto;
+}
+
+
+.button:hover {
+  box-shadow: 0 0 10px rgba(255, 174, 198, 0.5);
+}
+
+
+a {
+  color: var(--skye-window-text-color);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--skye-border-color);
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: #FF4D82;
+  border-bottom: 1px solid #FF4D82;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.task-item {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+
+.window-about {
+  width: 450px;
+  margin-left: -60px; 
+  position: relative;
+}
+
+
+.window-contact {
+  margin-left: -60px; 
+  position: relative;
+}
+
+
+.container {
+  justify-content: flex-start;
+  padding-left: 80px; 
+}
+
+.window-skills {
+  width: 350px;
+  margin-right: -60px; 
+  position: relative;
+}
+
+.window-education {
+  width: 350px;
+  margin-right: -60px; 
+  position: relative;
+}
+
+.window-interests {
+  width: 350px;
+  margin-right: -60px;
+  position: relative;
+}
+
+
+.right-column {
+  align-items: flex-end; 
+  padding-right: 20px;
+}
+.window-projects {
+  margin-left: 100px; 
+  position: relative;
+}
+.boyfriend {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 70px; 
+  height: auto;
+  cursor: pointer;
+}
+.desktop-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: -750px auto; 
+  width: fit-content; 
+  padding: 20px;
+}
+
+.icon-row {
+  display: flex;
+  gap: 60px; 
+  justify-content: center;
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 10px;
+  border-radius: 8px;
+  width: 80px; 
+}
+
+.desktop-icon:hover {
+  background: rgba(255, 208, 218, 0.3);
+  transform: translateY(-2px);
+}
+
+.desktop-icon img {
+  width: 80px;
+  height: auto;
+  margin-bottom: 8px;
+  image-rendering: pixelated;
+}
+
+.desktop-icon span {
+  color: var(--skye-window-text-color);
+  font-family: 'kawaii', sans-serif;
+  font-size: 14px;
+  text-align: center;
+color:#FFF0F5;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+/* Add selection effect */
+.desktop-icon.selected {
+  background: rgba(255, 208, 218, 0.5);
+}
+
+/* Add click animation */
+.desktop-icon:active {
+  transform: scale(0.95);
+}
+#statuscafe {
+  padding: .5em;
+  background-color: rgb(255, 240, 244);
+  border: 1px solid rgb(255, 180, 230);
+}
+#statuscafe-username {
+  margin-bottom: .5em;
+}
+#statuscafe-content {
+  margin: 0 1em 0.5em 1em;
+}
+
+.stat-container {
+  margin-bottom: 15px;
+}
+
+.stat-name {
+  display: inline-block;
+  width: 120px;
+  color: var(--skye-window-text-color);
+  font-weight: bold;
+}
+
+.stat-bar-container {
+  display: inline-block;
+  width: 200px;
+  height: 20px;
+  background-color: var(--skye-inactive-color);
+  border: 2px solid var(--skye-border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  vertical-align: middle;
+  position: relative;
+}
+
+.stat-bar {
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--skye-border-color),
+    var(--skye-border-color) 8px,
+    var(--skye-window-text-color) 8px,
+    var(--skye-window-text-color) 16px
+  );
+  image-rendering: pixelated;
+  transition: width 1s ease-in-out;
+}
+
+.stat-value {
+  display: inline-block;
+  width: 50px;
+  text-align: right;
+  margin-left: 10px;
+  color: var(--skye-window-text-color);
+  font-weight: bold;
+}
+.window-info .title::before {
+  background-image: url('assets/smile.png');
+}
+
+.window-gallery .title::before {
+  background-image: url('assets/folder.png');
+}
+
+.window-trash .title::before {
+  background-image: url('assets/warning.png');
+}
+
+.window-time .title::before {
+  background-image: url('assets/heart.png');
+}
+
+#birthday-countdown {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'kawaii', sans-serif;
+  color: white;
+  font-size: 20px;
+  background: rgba(255, 128, 174, 0.5);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+/* MOBILE STYLES - Only apply to phones */
+@media only screen and (max-width: 767px) {
+  body {
+    font-size: 16px;
+    overflow-y: auto; /* Allow scrolling on mobile */
+  }
+  
+  /* Prevent horizontal scrolling on the entire page */
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative; /* Creates a new stacking context */
+  }
+  
+  /* Fix for background image on mobile */
+  .fixed-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 100vw; /* Ensure it covers the entire viewport width */
+    min-height: 100vh; /* Ensure it covers the entire viewport height */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Keep the background fixed when scrolling */
+    overflow: hidden; /* Prevent any overflow */
+  }
+  
+  /* Add extra width to ensure no white space appears */
+  .fixed-background::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: -50px; /* Extra space to the right */
+    bottom: 0;
+    background: inherit;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 40px 20px;
+    gap: 20px;
+  }
+  
+  .left-column, 
+  .right-column {
+    width: 100%;
+    max-width: 450px;
+    align-items: center;
+    padding-right: 0;
+  }
+  
+  /* Reset window positioning for mobile */
+  .window-about,
+  .window-skills,
+  .window-projects,
+  .window-education,
+  .window-interests,
+  .window-contact,
+  .window-stats,
+  .window-me,
+  .window-info,
+  .window-gallery,
+  .window-trash,
+  .window-time {
+    margin-left: 0;
+    margin-right: 0;
+    position: static;
+    width: 100%;
+    max-width: 450px;
+    box-sizing: border-box;
+  }
+  
+  /* Fix window content overflow */
+  .window {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent any overflow from the window itself */
+  }
+  
+  /* SPECIFIC FIX: Ensure content stays in windows */
+  .window .content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 70vh;
+    word-wrap: break-word;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    max-width: 100%;
+  }
+  
+  /* SPECIFIC FIX: Task items overflow */
+  .task-item {
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    margin-right: 4px; /* Add some margin to prevent touching the right edge */
+    overflow: hidden; /* Prevent overflow */
+  }
+  
+  /* SPECIFIC FIX: Stat container overflow */
+  .stat-container {
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  /* Adjust stat elements to fit in container */
+  .stat-name {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  
+  .stat-bar-container {
+    width: calc(100% - 60px);
+    max-width: 100%;
+  }
+  
+  /* Fix for images in content */
+  .window .content img,
+  .task-item img {
+    max-width: 95%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  /* Make sure tables don't overflow */
+  table {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    overflow-x: auto;
+    box-sizing: border-box;
+  }
+  
+  /* Ensure lists don't overflow */
+  ul, ol {
+    padding-left: 15px;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  
+  /* Force all text to wrap */
+  .window .content *,
+  .task-item *,
+  .stat-container * {
+    white-space: normal;
+    word-break: break-word;
+    word-wrap: break-word;
+    max-width: 100%;
+  }
+  
+  /* Make title text not overflow on small screens */
+  .window .title span {
+    max-width: calc(100% - 60px);
+  }
+  
+  /* Adjust desktop icons for mobile */
+  .desktop-icons {
+    margin: 20px auto;
+    width: 100%;
+  }
+  
+  .icon-row {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .desktop-icon {
+    width: 70px;
+  }
+  
+  .desktop-icon img {
+    width: 60px;
+  }
+  
+  .desktop-icon span {
+    font-size: 12px;
+  }
+  
+  /* Adjust fixed elements */
+  img[src="assets/puppy.gif"] {
+    width: 40px;
+    bottom: 15px;
+    left: 15px;
+  }
+  
+  .badge {
+    width: 30px;
+    left: 65px;
+    bottom: 15px;
+  }
+  
+  .boyfriend {
+    width: 50px;
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  #birthday-countdown {
+    font-size: 16px;
+    padding: 8px 15px;
+    width: auto;
+    max-width: 90%;
+  }
+  
+  /* Smaller scrollbars for mobile */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* Extra small phones */
+@media only screen and (max-width: 380px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .window {
+    padding: 3px;
+    margin-bottom: 15px;
+  }
+  
+  .window::after {
+    transform: scale(0.9);
+    transform-origin: bottom center;
+  }
+  
+  .window .content {
+    padding: 5px;
+    font-size: 14px;
+    max-height: 60vh;
+  }
+  
+  /* Further reduce padding for task items on very small screens */
+  .task-item {
+    padding: 5px;
+    margin-bottom: 8px;
+  }
+  
+  /* Ensure stat containers fit on tiny screens */
+  .stat-container {
+    margin-bottom: 10px;
+  }
+  
+  .stat-bar-container {
+    width: calc(100% - 50px);
+  }
+  
+  .button {
+    padding: 4px 8px;
+  }
+  
+  .desktop-icon {
+    width: 60px;
+    padding: 5px;
+  }
+  
+  .desktop-icon img {
+    width: 50px;
+  }
+  
+  img[src="assets/puppy.gif"],
+  .badge {
+    width: 30px;
+  }
+  
+  .badge {
+    left: 55px;
+  }
+  
+  .boyfriend {
+    width: 40px;
+  }
+  
+  #birthday-countdown {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+  
+  .container {
+    padding: 30px 10px;
+  }
+}
+
+/* Landscape mode for phones */
+@media (max-width: 767px) and (orientation: landscape) {
+  .container {
+    padding: 20px 20px 70px 20px;
+  }
+  
+  .desktop-icons {
+    margin: 0 auto;
+  }
+  
+  .window .content {
+    max-height: 40vh;
+  }
+  
+  #birthday-countdown {
+    bottom: auto;
+    top: 10px;
+  }
+  
+  /* Additional fixes for landscape mode */
+  .window {
+    margin-bottom: 15px;
+  }
+}
+
+/* Extra styles for iOS devices which sometimes have background issues */
+@supports (-webkit-overflow-scrolling: touch) {
+  .fixed-background {
+    background-attachment: scroll; /* Different approach for iOS */
+    height: 100vh; /* Use viewport height */
+    width: 100vw; /* Use viewport width */
+  }
+  
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('assets/morning.png');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+  }
+}
