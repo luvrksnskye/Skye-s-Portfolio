@@ -222,12 +222,33 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
     const boyfriendImg = document.querySelector(".boyfriend");
-    const sound = new Audio("assets/sounds/touch.wav");
+    const sound = new Audio("assets/sounds/sqek.mp3");
 
-    boyfriendImg.addEventListener("click", function () {
+    boyfriendImg.addEventListener("click", function (event) {
         sound.play();
         boyfriendImg.src = "assets/Mewo_Awake_Sprite.gif";
+        createHearts(event.clientX, event.clientY);
     });
+
+    function createHearts(x, y) {
+        for (let i = 0; i < 5; i++) { // Generate multiple hearts per click
+            const heart = document.createElement("img");
+            heart.classList.add("floating-heart");
+            heart.src = "assets/heart.png"; // Set the src attribute to the desired image
+            document.body.appendChild(heart);
+
+            const size = Math.random() * 15 + 10;
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            heart.style.left = `${x + (Math.random() * 30 - 15)}px`;
+            heart.style.top = `${y + (Math.random() * 30 - 15)}px`;
+            heart.style.position = "absolute"; // Add position absolute to make it float
+
+            setTimeout(() => {
+                heart.remove();
+            }, 2000);
+        }
+    }
 });
 
     </script>
