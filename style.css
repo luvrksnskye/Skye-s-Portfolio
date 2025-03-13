@@ -750,23 +750,55 @@ color:#FFF0F5;
     box-sizing: border-box;
   }
   
-  /* Fix window content overflow */
+  /* Improved window styling for better content containment */
   .window {
     max-width: 100%;
     box-sizing: border-box;
-    overflow: hidden; /* Prevent any overflow from the window itself */
+    overflow: visible; /* Allow window decorations to be visible */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
   }
   
-  /* SPECIFIC FIX: Ensure content stays in windows */
+  /* Improved window title bar to stay fixed */
+  .window .title {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* IMPROVED: Enhanced content scrolling */
   .window .content {
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 70vh;
+    max-height: 60vh; /* Limit height to enable scrolling */
+    min-height: 50px; /* Ensure there's always some visible content */
+    height: auto;
     word-wrap: break-word;
     box-sizing: border-box;
     width: 100%;
-    padding: 8px;
+    padding: 12px;
     max-width: 100%;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    display: block; /* Ensure block display for proper scrolling */
+    position: relative; /* Create positioning context */
+  }
+  
+  /* Add visual indicator for scrollable content */
+  .window .content:after {
+    content: "";
+    display: block;
+    height: 8px;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.05), transparent);
+    position: sticky;
+    bottom: 0;
+    pointer-events: none;
   }
   
   /* SPECIFIC FIX: Task items overflow */
@@ -839,6 +871,9 @@ color:#FFF0F5;
   /* Make title text not overflow on small screens */
   .window .title span {
     max-width: calc(100% - 60px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   
   /* Adjust desktop icons for mobile */
@@ -890,10 +925,59 @@ color:#FFF0F5;
     max-width: 90%;
   }
   
-  /* Smaller scrollbars for mobile */
+  /* Enhanced scrollbars for better usability */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,0.05);
+  }
+  
+  /* Fix for emoji alignment on mobile - UPDATED */
+  emj {
+    display: inline;
+    text-align: inherit;
+    vertical-align: text-bottom; /* Changed from middle to text-bottom */
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    line-height: 1;
+  }
+  
+  /* Add specific rule for emoji images after JS replacement */
+  img.emoji {
+    vertical-align: text-bottom !important;
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Fix for paragraph alignment containing emojis */
+  .window .content p {
+    text-align: left;
+    display: block;
+    white-space: normal;
+    word-break: break-word;
+    word-wrap: break-word;
+  }
+  
+  /* Special handling for wider windows */
+  .larger-window {
+    width: 100% !important; /* Override inline styles */
+    height: auto !important; /* Make height adapt to content */
+    max-width: 450px;
+  }
+  
+  /* Fix for larger window content */
+  .larger-window .content {
+    max-height: 60vh !important; /* Override inline styles */
   }
 }
 
@@ -913,10 +997,11 @@ color:#FFF0F5;
     transform-origin: bottom center;
   }
   
+  /* Adjust content height for smaller screens */
   .window .content {
     padding: 5px;
     font-size: 14px;
-    max-height: 60vh;
+    max-height: 50vh;
   }
   
   /* Further reduce padding for task items on very small screens */
@@ -968,6 +1053,12 @@ color:#FFF0F5;
   .container {
     padding: 30px 10px;
   }
+  
+  /* Maintain emoji alignment on extra small screens */
+  img.emoji {
+    vertical-align: text-bottom !important;
+    display: inline !important;
+  }
 }
 
 /* Landscape mode for phones */
@@ -980,6 +1071,7 @@ color:#FFF0F5;
     margin: 0 auto;
   }
   
+  /* Adjust content height for landscape orientation */
   .window .content {
     max-height: 40vh;
   }
@@ -992,6 +1084,12 @@ color:#FFF0F5;
   /* Additional fixes for landscape mode */
   .window {
     margin-bottom: 15px;
+  }
+  
+  /* Maintain emoji alignment in landscape */
+  img.emoji {
+    vertical-align: text-bottom !important;
+    display: inline !important;
   }
 }
 
@@ -1014,5 +1112,29 @@ color:#FFF0F5;
     background-size: cover;
     background-position: center;
     z-index: -1;
+  }
+  
+  /* Enhanced iOS scrolling for window content */
+  .window .content {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll; /* Force scroll on iOS */
+  }
+  
+  /* Fix for emoji alignment specifically on iOS - UPDATED */
+  emj {
+    display: inline;
+    vertical-align: text-bottom; /* Changed from middle to text-bottom */
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    line-height: 1;
+  }
+  
+  /* Add specific rule for emoji images on iOS */
+  img.emoji {
+    vertical-align: text-bottom !important;
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }
