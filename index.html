@@ -220,21 +220,35 @@
 <img title="that's my sleepy boyfriend lol" src="assets/Mewo_Sleep.gif" class="boyfriend">
     <div class="fixed-background"></div>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
+   document.addEventListener("DOMContentLoaded", function () {
     const boyfriendImg = document.querySelector(".boyfriend");
     const sound = new Audio("assets/sounds/sqek.mp3");
 
-    boyfriendImg.addEventListener("click", function (event) {
+    function handleInteraction(event) {
+        event.preventDefault(); // Prevent default touch behavior
         sound.play();
         boyfriendImg.src = "assets/Mewo_Awake_Sprite.gif";
-        createHearts(event.clientX, event.clientY);
-    });
+
+        let x, y;
+        if (event.touches) {
+            x = event.touches[0].clientX;
+            y = event.touches[0].clientY;
+        } else {
+            x = event.clientX;
+            y = event.clientY;
+        }
+
+        createHearts(x, y);
+    }
+
+    boyfriendImg.addEventListener("click", handleInteraction);
+    boyfriendImg.addEventListener("touchstart", handleInteraction);
 
     function createHearts(x, y) {
-        for (let i = 0; i < 5; i++) { // Generate multiple hearts per click
+        for (let i = 0; i < 5; i++) {
             const heart = document.createElement("img");
             heart.classList.add("floating-heart");
-            heart.src = "assets/heart.png"; // Set the src attribute to the desired image
+            heart.src = "assets/heart.png";
             document.body.appendChild(heart);
 
             const size = Math.random() * 15 + 10;
@@ -242,7 +256,7 @@
             heart.style.height = `${size}px`;
             heart.style.left = `${x + (Math.random() * 30 - 15)}px`;
             heart.style.top = `${y + (Math.random() * 30 - 15)}px`;
-            heart.style.position = "absolute"; // Add position absolute to make it float
+            heart.style.position = "absolute";
 
             setTimeout(() => {
                 heart.remove();
