@@ -220,31 +220,32 @@
 <img title="that's my sleepy boyfriend lol" src="assets/Mewo_Sleep.gif" class="boyfriend">
     <div class="fixed-background"></div>
     <script>
-   document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const boyfriendImg = document.querySelector(".boyfriend");
-    const sound = new Audio("assets/sounds/sqek.mp3");
+    const clickSound = new Audio("assets/sounds/sqek.mp3");
+    const hotCatSound = new Audio("assets/sounds/undertale hot cat sound effect.mp3"); 
+    let clickCount = 0;
 
     function handleInteraction(event) {
         event.preventDefault(); // Prevent default touch behavior
-        sound.play();
-        boyfriendImg.src = "assets/Mewo_Awake_Sprite.gif";
+        clickCount++;
 
-        let x, y;
-        if (event.touches) {
-            x = event.touches[0].clientX;
-            y = event.touches[0].clientY;
+        if (clickCount === 20) {
+            hotCatSound.play();
+            clickCount = 0; // Reset counter after playing the sound
         } else {
-            x = event.clientX;
-            y = event.clientY;
+            clickSound.play();
         }
 
-        createHearts(x, y);
+        boyfriendImg.src = "assets/Mewo_Awake_Sprite.gif";
+
+        createHearts();
     }
 
     boyfriendImg.addEventListener("click", handleInteraction);
     boyfriendImg.addEventListener("touchstart", handleInteraction);
 
-    function createHearts(x, y) {
+    function createHearts() {
         for (let i = 0; i < 5; i++) {
             const heart = document.createElement("img");
             heart.classList.add("floating-heart");
@@ -254,9 +255,10 @@
             const size = Math.random() * 15 + 10;
             heart.style.width = `${size}px`;
             heart.style.height = `${size}px`;
-            heart.style.left = `${x + (Math.random() * 30 - 15)}px`;
-            heart.style.top = `${y + (Math.random() * 30 - 15)}px`;
-            heart.style.position = "absolute";
+            heart.style.position = "fixed";
+            heart.style.bottom = "20px";
+            heart.style.right = "80px";
+            heart.style.zIndex = "999"; // Ensure it appears on top
 
             setTimeout(() => {
                 heart.remove();
