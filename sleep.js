@@ -61,6 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
             timeWindow.className = 'window window-time';
             timeWindow.style.position = 'absolute';
             timeWindow.style.zIndex = '1000';
+            timeWindow.style.top = '0px'; // Set top position to 0
+            timeWindow.style.left = '0px'; // Set left position to 0
             
             // Apply responsive dimensions
             const dimensions = getResponsiveWindowDimensions(500, 350);
@@ -111,9 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
             optionsContainer.style.gap = isMobileDevice() ? '15px' : '0'; 
 
             const sleepOptions = [
-                { icon: 'assets/time_evening.png', text: 'sleep until dusk', background: 'assets/background/afternoon.webp' },
-                { icon: 'assets/time_night.png', text: 'sleep until night', background: 'assets/background/night.png' },
-                { icon: 'assets/time_noon.png', text: 'sleep until tomorrow', background: 'assets/background/morning.png' }
+                { icon: 'assets/time_evening.png', text: 'sleep until dusk', background: 'assets/background/afternoon.webp', sound: 'assets/sounds/afternoon.mp3' },
+                { icon: 'assets/time_night.png', text: 'sleep until night', background: 'assets/background/night.png', sound: 'assets/sounds/night.mp3' },
+                { icon: 'assets/time_noon.png', text: 'sleep until tomorrow', background: 'assets/background/morning.png', sound: 'assets/sounds/morning.mp3' }
             ];
             
             sleepOptions.forEach(option => {
@@ -155,7 +157,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.body.appendChild(fadeOverlay);
                     
                     // Play sound effect
-                    const audio = new Audio('assets/sounds/execute.wav');
+                    const audio = new Audio(option.sound);
+                    audio.volume = 0.2; // Set volume to 5 (out of 10)
+                    audio.loop = true; // Loop the sound
                     audio.play();
                     
                     // Fade in
@@ -257,6 +261,8 @@ document.addEventListener('DOMContentLoaded', function() {
             galleryWindow.className = 'window window-gallery';
             galleryWindow.style.position = 'absolute';
             galleryWindow.style.zIndex = getHighestZIndex() + 1;
+            galleryWindow.style.top = '0px'; // Set top position to 0
+            galleryWindow.style.left = '0px'; // Set left position to 0
             
             // Apply responsive dimensions
             const dimensions = getResponsiveWindowDimensions(600, 490);
@@ -355,6 +361,8 @@ document.addEventListener('DOMContentLoaded', function() {
             infoWindow.className = 'window window-info';
             infoWindow.style.position = 'absolute';
             infoWindow.style.zIndex = getHighestZIndex() + 1;
+            infoWindow.style.top = '0px'; // Set top position to 0
+            infoWindow.style.left = '0px'; // Set left position to 0
             
             // Apply responsive dimensions
             const dimensions = getResponsiveWindowDimensions(500, 450);
@@ -442,6 +450,8 @@ document.addEventListener('DOMContentLoaded', function() {
             trashWindow.className = 'window window-trash';
             trashWindow.style.position = 'absolute';
             trashWindow.style.zIndex = getHighestZIndex() + 1;
+            trashWindow.style.top = '0px'; // Set top position to 0
+            trashWindow.style.left = '0px'; // Set left position to 0
             
             // Apply responsive dimensions
             const dimensions = getResponsiveWindowDimensions(400, 460);
