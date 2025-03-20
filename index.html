@@ -7,7 +7,10 @@
     <link rel="icon" type="image/x-icon" href="assets/strawberryribbon.gif">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+
 </head>
 <body>
     <div class="fixed-background"></div>
@@ -22,7 +25,7 @@
                 <span>Info</span>
             </div>
             <div class="desktop-icon">
-              <img src="assets/icons-desk/hourglass.png" class="time" alt="Time">
+              <img src="assets/icons-desk/clock.png" class="time" alt="Time">
                 <span>Time</span>
             </div>
             <div class="desktop-icon">
@@ -30,14 +33,18 @@
                 <span>Trash</span>
             </div>
         </div>
-        <h1 class="site-title">Skye's Portfolio</h1>
+        <div class="site-title">
+            <img src="assets/Skye-Portfolio.png" class="responsive-img" alt="Skye's Portfolio" style="width: 700px; height: auto; margin:0; padding:0;">
+
+        </div>
+          
         <div class="right-icons">
             <div class="desktop-icon">
-              <img src="assets/icons-desk/camera.png" class="gallery" alt="gallery">
-                <span>Gallery</span>
+              <img src="assets/icons-desk/pills.png" class="pills" alt="pills">
+                <span>Medication</span>
             </div>
             <div class="desktop-icon">
-                <img src="assets/icons-desk/mp3.png" class="youtube" alt="Youtube">
+                <img src="assets/icons-desk/youtube.png" class="youtube" alt="Youtube">
                 <span>Youtube</span>
             </div>
             <div class="desktop-icon">
@@ -51,19 +58,46 @@
     <div class="container three-column">
         <!-- Left Column -->
         <div class="column">
+            <!-- About Window -->
             <div class="window window-about">
-                <div class="title"><span>About Me</span></div>
+                <div class="title">
+                    <span>bio</span>
+                </div>
                 <div class="content">
-                    <p>Hi, I'm Skye! (they/it) <emj>🎀</emj></p>
-                    <p>A passionate front-end developer student with a love for creating cute and functional web experiences. I love creating things and playing with colors in my digital space. I love playing and messing around with codes! I'm passionate about what I do, and I'm in love with creativity, an eternal dance. I learned to program a long time ago when I was just a toddler, experimenting with code from my favorite indie games. I've always been passionate about technology and video games, as well as graphic design. <emj>💓</emj></p>
-                    <p><emj>💕</emj> Age: 19</p>
-                    <p>   <emj>🍰</emj> Location: US</p>
-                    <p>  <emj>💗</emj> Languages: English, Spanish, French</p>
+                    <img title="it's me!"src="assets/me-in-pixel.png" alt="Pixel art of Skye" class="pixel-me">
+                    
+                    <h2>Hi, I'm Skye! <span class="bio-emoji"><emj>🎀</emj></span></h2>
+                    <p>A passionate front-end developer student with a love for creating cute and functional web experiences. I love creating things and playing with colors in my digital space.</p>
+                    
+                    <p>I love playing and messing around with codes! <span class="bio-emoji"><emj>💓</emj></span> I'm passionate about what I do, and I'm in love with creativity, an eternal dance.</p>
+                    
+                    <p>I learned to program a long time ago when I was just a child, experimenting with code from my favorite indie games. I've always been passionate about technology and video games, as well as graphic design.</p>
+                    
+                    <div class="personal-info">
+                        <div class="info-tag"><span class="bio-emoji"><emj>🍰</emj></span> Age: 19</div>
+                        <div class="info-tag"><span class="bio-emoji"><emj>💗</emj></span> Location: US</div>
+                        <div class="info-tag"><span class="bio-emoji"><emj>💕</emj></span> Pronouns: they/it</div>
+                        <div class="info-tag"><span class="bio-emoji"><emj>✨</emj></span> Languages: English, Spanish, French</div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h3>Fun Facts <span class="bio-emoji"><emj>❤️</emj></span></h3>
+                        <ul>
+                            <li>I collect everything!</li>
+                            <li>My favorite colors are pink and blue (obviously!)</li>
+                            <li>I love to write when I'm not coding</li>
+                            <li>I'm learning French</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <div class="button" id="more-about-me">More About Me!</div>
+                    </div>
                 </div>
             </div>
             
             <div class="window window-stats">
-                <div class="title"><span>Site Stats</span></div>
+                <div class="title"><span>site Stats</span></div>
                 <div class="content">
                     <div class="task-item">
                         <h3>Site Stats</h3>
@@ -86,150 +120,320 @@
             </div>
             
             <div class="window window-contact">
-                <div class="title"><span>Contact</span></div>
+                <div class="title"><span>contact</span></div>
                 <div class="content">
                     <p><emj>❤️</emj> Email: luvrksnskyejourney@gmail.com  </p>
                     <p><emj>🎀</emj> Discord: <a href="https://discord.gg/yYxJaAf5" target="_blank">@Skye</a></p>
-                    <p><emj>✨</emj> GitHub: <a href="https://github.com/luvrksnskye" target="_blank">@luvrksnskye</a></p>                  
-                    <p>I'm always open to messages!!</p>
+                    <p><emj>✨</emj> GitHub: <a href="https://github.com/luvrksnskye" target="_blank">@luvrksnskye</a></p>  
+                    <p><emj>💕</emj> Ko-Fi: <a href="https://ko-fi.com/luvrksn_koi" target="_blank">@luvrksn_koi</a></p> 
+                    <p><emj>💗</emj> Youtube: <a href="https://www.youtube.com/channel/UCenOprJAlJTQP64nMwW3xSA" target="_blank"> @Luvrksn_Skye</a> </p>   
+                    <p><emj>💙</emj> Twitter: <a href="https://x.com/LuvrksnSkye" target="_blank"></a>@LuvrksnSkye</p>                 
+                    <p>I'm always open to messages!! If you'd like to get in touch with me, you can always do so on Discord! I usually reply to messages faster there, even late at night. I'm always very attentive, but if I don't answer, I'm probably sleeping or studying ehe</p>
                 </div>
             </div>
         </div>
         
-        <!-- Middle Column -->
-        <div class="column">
-            <div class="window window-projects larger-window">
-                <div class="title"><span>My Projects</span></div>
-                <div class="content">
-                    <p>I'm currently just a student, so my work isn't professional at all, and most of the time it's just me letting my imagination run wild. I work alongside my sister, who's an artist, and my boyfriend, who's also a student and a backend developer! <emj>🎉</emj></p>
-                    <div class="task-item">
-                        <h3>Cute Weather App</h3>
-                        <p>A weather application with cute animations and icons.</p>
-                        <p>I'm planning to develop a small weather web app, but for now, it's a distant project still in its early drafts. Until then, I'm limiting myself to improving my programming and design skills with practices like these.</p>
-                        <a href="#"><button class="button">Work in progress!</button></a>
-                    </div>
+<!-- Middle Column -->
+<div class="column">
+    <div class="window window-projects larger-window">
+        <div class="title"><span>projects</span></div>
+        <div class="content">
+            <p>I'm currently just a student, so my work isn't professional at all, and most of the time it's just me letting my imagination run wild. I work alongside my sister, who's an artist, and my boyfriend, who's also a student and a backend developer! <emj>🎉</emj></p>
 
-                    <div class="task-item">
-                        <h3>My personal website</h3>
-                        <p>(2024 - FOREVER!)</p>
-                        <p>My home on the internet and my safe place, one of my first projects in development. Skye Journey has been a project of self-expression and self-love. I'm happy with how I'm moving forward with it. Even though progress is slow, I'm happier every day.</p>
-                        <img src="assets/skyejourney.png" alt="Project screenshot">
-                        <img src="assets/skyejourneywebsite.png" alt="Project screenshot">
-                        <p>Technologies: JavaScript, HTML, CSS</p>
-                        <a href="https://luvrksknskyejourney.org/" target="_blank"><button class="button">View Project</button></a>
-                    </div>
+            <div class="task-item">
+                <h3>My personal website</h3>
+                <p>(2024 - FOREVER!)</p>
+                <p>My home on the internet and my safe place, one of my first projects in development. Skye Journey has been a project of self-expression and self-love. I'm happy with how I'm moving forward with it. Even though progress is slow, I'm happier every day.</p>
+                <img src="assets/skyejourney.png" alt="Project screenshot">
+                <img src="assets/skyejourneywebsite.png" alt="Project screenshot">
+                <p>Technologies: JavaScript, HTML, CSS</p>
+                <a href="https://luvrksknskyejourney.org/" target="_blank"><button class="button">View Project</button></a>
+            </div>
 
-                    <div class="task-item">
-                        <h3>Douce Framboise Cafe!</h3>
-                        <p>Adorable little website I'm building for a best friend. All of this has been practice for me, because I consider that I have a lot to learn even to improve. As I said before, I learned how to code HTML and CSS by looking at other people's code and playing around with it offline, you're welcome to do that with mine! i also learned by going to sites like w3schools, using HTML templates, etc.</p>
-                        <p>I'm still learning to program as I study, so be nice to me lololol</p>
-                        <img src="assets/douce famboise.png" alt="Project screenshot">
-                        <img src="assets/douce framboise cafe website.png" alt="Project screenshot">
-                        <a href="https://luvrksnskye.github.io/Douce-Framboise-Cafe-Website/" target="_blank"><button class="button">View Project</button></a>
-                    </div>
-                </div>
+            <div class="task-item">
+                <h3>Douce Framboise Cafe!</h3>
+                <p>Adorable little website I'm building for a best friend. All of this has been practice for me, because I consider that I have a lot to learn even to improve. As I said before, I learned how to code HTML and CSS by looking at other people's code and playing around with it offline, you're welcome to do that with mine! i also learned by going to sites like w3schools, using HTML templates, etc.</p>
+                <p>I'm still learning to program as I study, so be nice to me lololol</p>
+                <img src="assets/douce famboise.png" alt="Project screenshot">
+                <img src="assets/douce framboise cafe website.png" alt="Project screenshot">
+                <a href="https://luvrksnskye.github.io/Douce-Framboise-Cafe-Website/" target="_blank"><button class="button">View Project</button></a>
             </div>
-            
-            <div class="window window-education">
-                <div class="title"><span>Education</span></div>
-                <div class="content">
-                    <div class="task-item">
-                        <p>Software engineering</p>
-                        <p>Ivy Tech College</p>
-                    </div>
-                    <div class="task-item">
-                        <p>Web Development</p>
-                    </div>
-                </div>
+            <div class="task-item">
+                <h3>Selysunny website</h3>
+                <p>(2025 - ??)</p>
+                <img src="assets/working.png">
+                <p>A slightly larger website I'm developing for my older sister and her art. It's still in draft form, but I hope to have it ready this year.</p>
+                <a href="#"><button class="button">Work in progress!</button></a>
             </div>
-            
-            <div class="window window-me">
-                <div class="title"><span>MY STATS</span></div>
-                <div class="content">
-                    <div class="task-item">
-                        <h3>Character Stats</h3>
-                        
-                        <div class="stat-container">
-                            <span class="stat-name">Creativity</span>
-                            <div class="stat-bar-container">
-                                <div class="stat-bar" style="width: 85%;"></div>
-                            </div>
-                            <span class="stat-value">85/100</span>
-                        </div>
-                        
-                        <div class="stat-container">
-                            <span class="stat-name">Coding</span>
-                            <div class="stat-bar-container">
-                                <div class="stat-bar" style="width: 92%;"></div>
-                            </div>
-                            <span class="stat-value">92/100</span>
-                        </div>
-                        
-                        <div class="stat-container">
-                            <span class="stat-name">Design</span>
-                            <div class="stat-bar-container">
-                                <div class="stat-bar" style="width: 78%;"></div>
-                            </div>
-                            <span class="stat-value">78/100</span>
-                        </div>
-                        
-                        <div class="stat-container">
-                            <span class="stat-name">Health</span>
-                            <div class="stat-bar-container">
-                                <div class="stat-bar" style="width: 95%;"></div>
-                            </div>
-                            <span class="stat-value">95/100</span>
-                        </div>
-                        
-                        <div class="stat-container">
-                            <span class="stat-name">Power</span>
-                            <div class="stat-bar-container">
-                                <div class="stat-bar" style="width: 88%;"></div>
-                            </div>
-                            <span class="stat-value">88/100</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="task-item">
+                <h3>Echo Studios Lab</h3>
+                <p>(2025 - ??)</p>
+                <img src="assets/working.png">
+                <p>A special little website for Echo Studios, a project lab for the team of artists and programmers I'm part of. I plan to develop this website soon once I get my graphics tablet, so I can draw assets and sketch everything! I think it'll be one of the projects I'll put the most effort into this year.</p>
+                <a href="#"><button class="button">Work in progress!</button></a>
+            </div>
+            <div class="task-item">
+                <h3>Cute Weather App</h3>
+                <p>A weather application with cute animations and icons.</p>
+                <img src="assets/working.png">
+                <p>I'm planning to develop a small weather web app, but for now, it's a distant project still in its early drafts. Until then, I'm limiting myself to improving my programming and design skills with practices like these.</p>
+                <a href="#"><button class="button">Work in progress!</button></a>
             </div>
         </div>
-        
-        <!-- Right Column -->
-        <div class="column">
-            <div class="window window-skills">
-                <div class="title"><span>Skills</span></div>
-                <div class="content">
-                    <ul>
-                        <li>HTML5 & CSS3</li>
-                        <li>JavaScript</li>
-                        <li>React</li>
-                        <li>Typescript</li>
-                        <li>UI/UX Design</li>
-                        <li>Website Design</li>
-                    </ul>
-                </div>
+    </div>
+    
+    <div class="window window-education">
+        <div class="title"><span>education</span></div>
+        <div class="content">
+            <div class="task-item">
+                <p>Software engineering</p>
+                <p>Ivy Tech College</p>
             </div>
-            
-            <div class="window window-interests">
-                <div class="title"><span>Interests</span></div>
-                <div class="content">
-                    <ul>
-                        <li>Pixel Art</li>
-                        <li>Game Development</li>
-                        <li>UI Animation</li>
-                        <li>Web Development</li>
-                    </ul>
-                </div>
+            <div class="task-item">
+                <p>Web Development</p>
             </div>
-            
-            <div class="window window-achievements">
-                <div class="title"><span>Achievements</span></div>
-                <div class="content">
-                    <!-- This is the new window you requested, but didn't have content in the original -->
-                    <p>My achievements will be listed here soon!</p>
+            <h3>my tools!</h3>
+            <ul>
+                <li>Visual Studio Code</li>
+                <li>Figma</li>
+                <li>Canva</li>
+                <li>Aseprite</li>
+                <li>IbisPaint</li>
+                <li>Krita</li>
+                <li>React.js</li>
+                <li>Tailwind CSS</li>
+                <li>Git & GitHub</li>
+            </ul>
+            <h3>my workstation!</h3>
+            <p>I started my Linux journey using Arch Linux, now I only use Debian with KDE Plasma! I've tried tons of Linux distros but I always end up with Arch or Debian, so I will stick with that for a while.</p>
+            <img src="assets/debian-linux.png" style="width: 300px; height: auto; margin:0; padding:0;" alt="Project screenshot">
+    </div>
+    </div>
+    
+    <div class="window window-me">
+        <div class="title"><span>stats</span></div>
+        <div class="content">
+            <div class="task-item">
+                <h3>Character Stats</h3>
+                
+                <div class="stat-container">
+                    <span class="stat-name">Creativity</span>
+                    <div class="stat-bar-container">
+                        <div class="stat-bar" style="width: 85%;"></div>
+                    </div>
+                    <span class="stat-value">85/100</span>
+                </div>
+                
+                <div class="stat-container">
+                    <span class="stat-name">Coding</span>
+                    <div class="stat-bar-container">
+                        <div class="stat-bar" style="width: 92%;"></div>
+                    </div>
+                    <span class="stat-value">92/100</span>
+                </div>
+                
+                <div class="stat-container">
+                    <span class="stat-name">Design</span>
+                    <div class="stat-bar-container">
+                        <div class="stat-bar" style="width: 78%;"></div>
+                    </div>
+                    <span class="stat-value">78/100</span>
+                </div>
+                
+                <div class="stat-container">
+                    <span class="stat-name">Health</span>
+                    <div class="stat-bar-container">
+                        <div class="stat-bar" style="width: 95%;"></div>
+                    </div>
+                    <span class="stat-value">95/100</span>
+                </div>
+                
+                <div class="stat-container">
+                    <span class="stat-name">Power</span>
+                    <div class="stat-bar-container">
+                        <div class="stat-bar" style="width: 88%;"></div>
+                    </div>
+                    <span class="stat-value">88/100</span>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Right Column -->
+<div class="column">
+    <!-- Skills Window -->
+    <div class="window window-skills">
+        <div class="title">
+            <span>skills</span>
+        </div>
+        <div class="content">
+            <div class="section-nav">
+                <div class="section-button active" data-section="coding">Coding</div>
+                <div class="section-button" data-section="design">Design</div>
+
+            </div>
+            
+            <div class="skill-sections">
+                <!-- Coding Skills -->
+                <div class="skill-category" id="coding-skills">
+                    <h3>Coding Skills <img  class="bio-emoji" src="assets/Badge.png"></h3>
+                    
+                    <div class="skill-item" data-skill="html-css">
+                        <div class="skill-info">
+                            <div class="skill-name">HTML5 & CSS3</div>
+                            <div class="skill-level">
+                                <div class="skill-level-fill" style="width: 0%" data-width="92%"></div>
+                            </div>
+                            <div class="skill-description">
+                                I'm very comfortable with HTML5 and CSS3, including animations, Flexbox, and Grid layouts. I love making crazy and cute designs!
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item" data-skill="javascript">
+                        <div class="skill-info">
+                            <div class="skill-name">JavaScript</div>
+                            <div class="skill-level">
+                                <div class="skill-level-fill" style="width: 0%" data-width="85%"></div>
+                            </div>
+                            <div class="skill-description">
+                                I enjoy creating interactive elements and animations with JavaScript. I'm currently exploring more advanced concepts and frameworks.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item" data-skill="react">
+                        <div class="skill-info">
+                            <div class="skill-name">React</div>
+                            <div class="skill-level">
+                                <div class="skill-level-fill" style="width: 0%" data-width="75%"></div>
+                            </div>
+                            <div class="skill-description">
+                                I've been learning React for modern web applications. I enjoy building component-based interfaces and state management.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item" data-skill="typescript">
+                        <div class="skill-info">
+                            <div class="skill-name">TypeScript</div>
+                            <div class="skill-level">
+                                <div class="skill-level-fill" style="width: 0%" data-width="70%"></div>
+                        </div>
+                        <div class="skill-description">
+                            I've been learning TypeScript to improve my JavaScript applications with static typing. It helps me catch errors early!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Design Skills -->
+            <div class="skill-category" id="design-skills" style="display: none;">
+                <h3>Design Skills <img  class="bio-emoji" src="assets/Badge.png"></h3>
+                
+                <div class="skill-item" data-skill="ui-ux">
+                    <div class="skill-info">
+                        <div class="skill-name">UI/UX Design</div>
+                        <div class="skill-level">
+                            <div class="skill-level-fill" style="width: 0%" data-width="78%"></div>
+                        </div>
+                        <div class="skill-description">
+                            I love designing interfaces that are both pretty and functional! I focus on creating delightful user experiences.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-item" data-skill="website-design">
+                    <div class="skill-info">
+                        <div class="skill-name">Website Design</div>
+                        <div class="skill-level">
+                            <div class="skill-level-fill" style="width: 0%" data-width="85%"></div>
+                        </div>
+                        <div class="skill-description">
+                            I create cute and responsive website designs with attention to details, animations, and overall aesthetics.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-item" data-skill="pixel-art">
+                    <div class="skill-info">
+                        <div class="skill-name">Art</div>
+                        <div class="skill-level">
+                            <div class="skill-level-fill" style="width: 0%" data-width="52%"></div>
+                        </div>
+                        <div class="skill-description">
+                            I don't currently own a graphics tablet, but I would like to get one so I can draw and design my own assets! I wish to make my own icons, characters, and decorative elements for my projects.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+          
+        </div>
+    </div>
+</div>
+
+<!-- Interests Window -->
+<div class="window window-interests">
+    <div class="title">
+        <span>interests</span>
+    </div>
+    <div class="content">
+        <p>These are some of the things I'm passionate about and love to explore in my free time!</p>
+        
+        <div class="interests-grid">
+            <div class="interest-card" data-interest="pixel-art">
+                <div class="interest-name">Pixel Art</div>
+                <div class="interest-details">
+                    <p>I enjoy creating and designing things despite my limitations! I like pixel art, although it's usually quite difficult for me because I get overwhelmed quickly ehehe</p>
+                </div>
+            </div>
+            
+            <div class="interest-card" data-interest="game-dev">
+                <div class="interest-name">Game Development</div>
+                <div class="interest-details">
+                    <p>I'm currently part of a small group of programmers aspiring to develop an indie game. Echo Studios is actually quite small, so I'm looking to improve my front-end skills.</p>
+                </div>
+            </div>
+            
+            <div class="interest-card" data-interest="ui-animation">
+                <div class="interest-name">UI Animation</div>
+                <div class="interest-details">
+                    <p>I'm fascinated by how animations can make interfaces more delightful and intuitive, so i like to experiment with CSS animations and JavaScript.</p>
+                </div>
+            </div>
+            
+            <div class="interest-card" data-interest="web-dev">
+                <div class="interest-name">Web Development</div>
+                <div class="interest-details">
+                    <p>Beyond just studying it, web development is a true passion! I enjoy building creative sites and exploring new frameworks.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px; text-align: center;">
+            <div class="button" id="more-interests">Check out</div>
+        </div>
+    </div>
+</div>
+
+ <!-- collaborations Window -->
+ <div class="window window-collaborations">
+    <div class="title"><span>collaborations</span></div>
+    <div class="content">
+        <p>I currently work alongside my older sister. She's a digital artist and is responsible for many of my designs. I'm also part of the <a href="https://github.com/echo-studios-ue" target="_blank">Echo Studios</a> team, a group of programmers and artists who aspire to create an indie video game. <a href="https://selysun.carrd.co/" target="_blank">Selysunny</a> drew the mascot for my personal website, which is my most iconic logo. Currently, we have projects pending within our small team. My boyfriend, <a href="https://github.com/RegreDanger" target="_blank">RegreDanger</a>, is a backend developer, and I also work alongside him! <emj>💞</emj></p>
+        <div class="task-item">
+            <h3>Cream's Cafe project!</h3>
+            <p>A couple of years ago, Sely Sunny and I decided to create a collection of adorable animated characters based on a fictional coffee chain called "Cream's Cafe." These characters would be inspired by our mascots, and would have unique designs and stories. Over time, the idea came to life and the characters became exciting to me. Cream and Choco along with Berry are my favorite characters, there are currently more than ten that we have created, but many of them are still in drafts, and who knows, maybe I will make a website of tiny game about them! Choco and Cream are the most notable characters. Some others are Mochi, Mooncakecat, Honeycat, Pancakecat, Cappuccino and Milk.
+            </p>
+            <img src="assets/cream-and-choco.webp">
+            </div>
+    </div>
+    </div>
+</div>
+</div>
+
     
     <div id="birthday-countdown">-- days for Skye's birthday!</div>
     
@@ -295,7 +499,10 @@
         });
     });
     </script>
-    
+
+<!----BLA BLAHHH A LOT OF SCRIPTS-->
+        <script src="meow.js"></script>
+        <script src="blah.js"></script>
     <script src="tools/tooltip.js"></script>
     <script src="tools/tooltip-jquary.js"></script>
     <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>

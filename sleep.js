@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-
     document.querySelector('.fixed-background').style.backgroundImage = 'url("assets/background/morning.png")';
 
     const desktopIcons = document.querySelectorAll('.desktop-icon');
@@ -11,9 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
             switch(iconClass) {
                 case 'time':
                     openTimeWindow();
-                    break;
-                case 'gallery':
-                    openGalleryWindow();
                     break;
                 case 'info':
                     openInfoWindow();
@@ -144,6 +140,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 text.style.textAlign = 'center';
                 
                 optionDiv.addEventListener('click', function() {
+                    // Play select sound effect
+                    const selectSound = new Audio('assets/sounds/execute.wav');
+                    selectSound.play();
+                    
                     const fadeOverlay = document.createElement('div');
                     fadeOverlay.style.position = 'fixed';
                     fadeOverlay.style.top = '0';
@@ -151,10 +151,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     fadeOverlay.style.width = '100%';
                     fadeOverlay.style.height = '100%';
                     fadeOverlay.style.backgroundColor = 'rgb(10, 0, 42)'; 
-                    fadeOverlay.style.zIndex = '9999';
+                    fadeOverlay.style.zIndex = '99999999999999';
                     fadeOverlay.style.opacity = '0';
                     fadeOverlay.style.transition = 'opacity 1s ease';
                     document.body.appendChild(fadeOverlay);
+                    
                     
                     // Play sound effect
                     const audio = new Audio(option.sound);
@@ -181,7 +182,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                 document.body.removeChild(fadeOverlay);
                                 // Close the window after the transition completes
                                 if (document.body.contains(timeWindow)) {
-                                    document.body.removeChild(timeWindow);
+                                    timeWindow.classList.add('close-animation');
+                                    setTimeout(() => {
+                                        document.body.removeChild(timeWindow);
+                                    }, 500);
                                 }
                             }, 1000);
                         }, 500);
@@ -218,7 +222,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         const closeSound = new Audio('assets/sounds/touch.wav');
                         closeSound.play();
                         
-                        document.body.removeChild(timeWindow);
+                        timeWindow.classList.add('close-animation');
+                        setTimeout(() => {
+                            document.body.removeChild(timeWindow);
+                        }, 500);
                     }
                 }
             });
@@ -239,7 +246,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     closeSound.play();
                     
                     if (document.body.contains(timeWindow)) {
-                        document.body.removeChild(timeWindow);
+                        timeWindow.classList.add('close-animation');
+                        setTimeout(() => {
+                            document.body.removeChild(timeWindow);
+                        }, 500);
                     }
                 });
                 
@@ -252,106 +262,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    function openGalleryWindow() {
-        let galleryWindow = document.getElementById('gallery-window');
-        
-        if (!galleryWindow) {
-            galleryWindow = document.createElement('div');
-            galleryWindow.id = 'gallery-window';
-            galleryWindow.className = 'window window-gallery';
-            galleryWindow.style.position = 'absolute';
-            galleryWindow.style.zIndex = getHighestZIndex() + 1;
-            galleryWindow.style.top = '0px'; // Set top position to 0
-            galleryWindow.style.left = '0px'; // Set left position to 0
-            
-            // Apply responsive dimensions
-            const dimensions = getResponsiveWindowDimensions(600, 490);
-            galleryWindow.style.width = dimensions.width;
-            galleryWindow.style.height = dimensions.height;
-            
-            if (isMobileDevice()) {
-                galleryWindow.style.top = dimensions.top;
-                galleryWindow.style.left = dimensions.left;
-            } else {
-                galleryWindow.style.top = '550px';
-                galleryWindow.style.left = '30%';
-            }
-            
-            const titleBar = document.createElement('div');
-            titleBar.className = 'title';
-            titleBar.innerHTML = '<span>Gallery</span>';
-            
-            const content = document.createElement('div');
-            content.className = 'content';
-            content.style.padding = isMobileDevice() ? '10px' : '20px';
-            
-            // Adjust gallery grid based on screen size
-            const imgSize = isMobileDevice() ? '120px' : '150px';
-            const imgGap = isMobileDevice() ? '10px' : '15px';
-            
-            content.innerHTML = `
-                <h2>Photo Gallery</h2>
-                <div style="display: flex; flex-wrap: wrap; gap: ${imgGap}; justify-content: center;">
-                    <img src="assets/bread-kitty.jpg" alt="Bread Kitty" style="width: ${imgSize}; height: ${imgSize}; object-fit: cover; border-radius: 5px; cursor: pointer;">
-                    <img src="assets/music-cat.jpg" alt="music cat" style="width: ${imgSize}; height: ${imgSize}; object-fit: cover; border-radius: 5px; cursor: pointer;">
-                    <img src="assets/pixel-cat.jpg" alt="pixel cat" style="width: ${imgSize}; height: ${imgSize}; object-fit: cover; border-radius: 5px; cursor: pointer;">
-                    <img src="assets/kitty-computer.jpg" alt="meee" style="width: ${imgSize}; height: ${imgSize}; object-fit: cover; border-radius: 5px; cursor: pointer;">
-                    <img src="assets/bag-cat.jpg" alt="Pkitty" style="width: ${imgSize}; height: ${imgSize}; object-fit: cover; border-radius: 5px; cursor: pointer;">
-                </div>
-            `;
-            
-            galleryWindow.appendChild(titleBar);
-            galleryWindow.appendChild(content);
-            
-            // Make the window draggable on desktop only
-            if (!isMobileDevice()) {
-                makeWindowDraggable(galleryWindow);
-            }
-            
-            // Add close button functionality
-            titleBar.addEventListener('click', function(e) {
-                const rect = titleBar.getBoundingClientRect();
-                const rightSide = rect.right - 30;
-                
-                if (e.clientX > rightSide) {
-                    if (document.body.contains(galleryWindow)) {
-                        // Play closing sound
-                        const closeSound = new Audio('assets/sounds/touch.wav');
-                        closeSound.play();
-                        
-                        document.body.removeChild(galleryWindow);
-                    }
-                }
-            });
-            
-            // Add touch close button for mobile
-            if (isMobileDevice()) {
-                const closeButton = document.createElement('button');
-                closeButton.textContent = 'Close';
-                closeButton.className = 'button';
-                closeButton.style.marginTop = '15px';
-                closeButton.style.display = 'block';
-                closeButton.style.width = '80%';
-                closeButton.style.margin = '15px auto 0 auto';
-                
-                closeButton.addEventListener('click', function() {
-                    const closeSound = new Audio('assets/sounds/touch.wav');
-                    closeSound.play();
-                    
-                    if (document.body.contains(galleryWindow)) {
-                        document.body.removeChild(galleryWindow);
-                    }
-                });
-                
-                content.appendChild(closeButton);
-            }
-            
-            document.body.appendChild(galleryWindow);
-        } else {
-            galleryWindow.style.zIndex = getHighestZIndex() + 1;
-        }
-    }
-    
     function openInfoWindow() {
         let infoWindow = document.getElementById('info-window');
         
@@ -359,10 +269,6 @@ document.addEventListener('DOMContentLoaded', function() {
             infoWindow = document.createElement('div');
             infoWindow.id = 'info-window';
             infoWindow.className = 'window window-info';
-            infoWindow.style.position = 'absolute';
-            infoWindow.style.zIndex = getHighestZIndex() + 1;
-            infoWindow.style.top = '0px'; // Set top position to 0
-            infoWindow.style.left = '0px'; // Set left position to 0
             
             // Apply responsive dimensions
             const dimensions = getResponsiveWindowDimensions(500, 450);
@@ -408,7 +314,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         const closeSound = new Audio('assets/sounds/touch.wav');
                         closeSound.play();
                         
-                        document.body.removeChild(infoWindow);
+                        infoWindow.classList.add('close-animation');
+                        setTimeout(() => {
+                            document.body.removeChild(infoWindow);
+                        }, 500);
                     }
                 }
             });
@@ -428,7 +337,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     closeSound.play();
                     
                     if (document.body.contains(infoWindow)) {
-                        document.body.removeChild(infoWindow);
+                        infoWindow.classList.add('close-animation');
+                        setTimeout(() => {
+                            document.body.removeChild(infoWindow);
+                        }, 500);
                     }
                 });
                 
@@ -516,7 +428,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         closeSound.play();
                         
                         if (document.body.contains(trashWindow)) {
-                            document.body.removeChild(trashWindow);
+                            trashWindow.classList.add('close-animation');
+                            setTimeout(() => {
+                                document.body.removeChild(trashWindow);
+                            }, 500);
                         }
                     });
                     
@@ -544,7 +459,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         const closeSound = new Audio('assets/sounds/touch.wav');
                         closeSound.play();
                         
-                        document.body.removeChild(trashWindow);
+                        trashWindow.classList.add('close-animation');
+                        setTimeout(() => {
+                            document.body.removeChild(trashWindow);
+                        }, 500);
                     }
                 }
             });
@@ -564,7 +482,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     closeSound.play();
                     
                     if (document.body.contains(trashWindow)) {
-                        document.body.removeChild(trashWindow);
+                        trashWindow.classList.add('close-animation');
+                        setTimeout(() => {
+                            document.body.removeChild(trashWindow);
+                        }, 500);
                     }
                 });
                 
@@ -575,6 +496,126 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             trashWindow.style.zIndex = getHighestZIndex() + 1;
         }
+    }
+    
+    function makeWindowDraggable(windowElement) {
+        const titleBar = windowElement.querySelector('.title');
+        
+        if (!titleBar) return;
+        
+        // Add click handler for the close button
+        titleBar.addEventListener('click', function(e) {
+            const rect = titleBar.getBoundingClientRect();
+            const rightSide = rect.right - 30;
+            
+            if (e.clientX > rightSide) {
+                if (document.body.contains(windowElement)) {
+                    // Play closing sound
+                    const closeSound = new Audio('assets/sounds/touch.wav');
+                    closeSound.play();
+                    
+                    windowElement.classList.add('close-animation');
+                    setTimeout(() => {
+                        if (document.body.contains(windowElement)) {
+                            document.body.removeChild(windowElement);
+                        }
+                    }, 500);
+                }
+            }
+        });
+        
+        // Set up interact.js for dragging
+        interact(windowElement)
+            .draggable({
+                // Enable inertia for smoother movement
+                inertia: {
+                    resistance: 10,
+                    minSpeed: 100,
+                    endSpeed: 10
+                },
+                // Keep the element within the viewport
+                modifiers: [
+                    interact.modifiers.restrictRect({
+                        restriction: 'parent',
+                        endOnly: true,
+                        // Allow some overflow
+                        elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+                    })
+                ],
+                // Only allow dragging from the title bar
+                allowFrom: '.title',
+                // Disable dragging if on close button area
+                ignoreFrom: '.title:after',
+                
+                listeners: {
+                    start: function(event) {
+                        // Bring window to front when dragging starts
+                        windowElement.style.zIndex = getHighestZIndex() + 1;
+                        windowElement.classList.add('active');
+                        
+                        // Add a subtle scale effect
+                        windowElement.style.transform = 'scale(1.01)';
+                        
+                        // Change cursor
+                        document.body.style.cursor = 'grabbing';
+                        titleBar.style.cursor = 'grabbing';
+                        
+                        // Prevent text selection globally during drag
+                        document.body.style.userSelect = 'none';
+                        document.body.style.webkitUserSelect = 'none';
+                        document.body.style.mozUserSelect = 'none';
+                        document.body.style.msUserSelect = 'none';
+                        
+                        // Add shadow effect
+                        windowElement.style.boxShadow = '0 8px 20px rgba(255, 174, 198, 0.5)';
+                        
+                        // Prevent default behaviors
+                        event.preventDefault();
+                    },
+                    move: function(event) {
+                        // Get current position
+                        let x = (parseFloat(windowElement.getAttribute('data-x')) || 0) + event.dx;
+                        let y = (parseFloat(windowElement.getAttribute('data-y')) || 0) + event.dy;
+                        
+                        // Apply transform
+                        windowElement.style.transform = `translate(${x}px, ${y}px) scale(1.01)`;
+                        
+                        // Store the position
+                        windowElement.setAttribute('data-x', x);
+                        windowElement.setAttribute('data-y', y);
+                        
+                        // Prevent default behaviors
+                        event.preventDefault();
+                    },
+                    end: function(event) {
+                        // Reset cursor
+                        document.body.style.cursor = '';
+                        titleBar.style.cursor = '';
+                        
+                        // Re-enable text selection
+                        document.body.style.userSelect = '';
+                        document.body.style.webkitUserSelect = '';
+                        document.body.style.mozUserSelect = '';
+                        document.body.style.msUserSelect = '';
+                        
+                        // Get final position
+                        const x = parseFloat(windowElement.getAttribute('data-x')) || 0;
+                        const y = parseFloat(windowElement.getAttribute('data-y')) || 0;
+                        
+                        // Apply smooth transition back to normal scale
+                        windowElement.style.transition = 'transform 0.2s ease';
+                        windowElement.style.transform = `translate(${x}px, ${y}px) scale(1)`;
+                        
+                        // Remove transition after it completes
+                        setTimeout(() => {
+                            windowElement.style.transition = '';
+                        }, 200);
+                        
+                        // Reset shadow
+                        windowElement.style.boxShadow = '';
+                    }
+                }
+            });
     }
     
     // Add window resize handler for dynamic adjustments
@@ -590,10 +631,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let defaultHeight = 400;
                 
                 // Determine default sizes based on window type
-                if (windowId === 'gallery-window') {
-                    defaultWidth = 600;
-                    defaultHeight = 490;
-                } else if (windowId === 'time-window') {
+                if (windowId === 'time-window') {
                     defaultWidth = 500;
                     defaultHeight = 350;
                 } else if (windowId === 'info-window') {
@@ -615,148 +653,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Helper function to make windows draggable
-    function makeWindowDraggable(windowElement) {
-        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-        
-        const titleBar = windowElement.querySelector('.title');
-        if (titleBar) {
-            // Add mouse events for desktop
-            titleBar.onmousedown = dragMouseDown;
-            
-            // Add touch events for mobile devices with touch screens
-            titleBar.ontouchstart = touchDragStart;
-        }
-        
-        function dragMouseDown(e) {
-            e = e || window.event;
-            e.preventDefault();
-            
-            // Check if click was on the close button area
-            const rect = titleBar.getBoundingClientRect();
-            const rightSide = rect.right - 30; // Approximate position of buttons
-            if (e.clientX > rightSide) {
-                return; 
-            }
-            
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            document.onmouseup = closeDragElement;
-            document.onmousemove = elementDrag;
-            
-            windowElement.classList.add('active');
-            windowElement.style.zIndex = getHighestZIndex() + 1;
-        }
-        
-        function touchDragStart(e) {
-            if (e.touches.length === 1) {
-                e.preventDefault();
-                
-                // Check if touch was on the close button area
-                const rect = titleBar.getBoundingClientRect();
-                const rightSide = rect.right - 30;
-                const touch = e.touches[0];
-                
-                if (touch.clientX > rightSide) {
-                    return;
-                }
-                
-                pos3 = touch.clientX;
-                pos4 = touch.clientY;
-                
-                document.ontouchend = closeTouchDrag;
-                document.ontouchmove = touchElementDrag;
-                
-                windowElement.classList.add('active');
-                windowElement.style.zIndex = getHighestZIndex() + 1;
-            }
-        }
-        
-        function elementDrag(e) {
-            e = e || window.event;
-            e.preventDefault();
-          
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            
-            // Keep window within viewport bounds
-            const newTop = windowElement.offsetTop - pos2;
-            const newLeft = windowElement.offsetLeft - pos1;
-            
-            // Get viewport dimensions
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
-            
-            // Get window dimensions
-            const windowWidth = windowElement.offsetWidth;
-            const windowHeight = windowElement.offsetHeight;
-            
-            // Calculate bounds (allow some part of the window to be outside viewport)
-            const minLeft = -windowWidth * 0.7;
-            const maxLeft = viewportWidth - windowWidth * 0.3;
-            const minTop = 0; // Don't allow window to go above the viewport
-            const maxTop = viewportHeight - 40; // Allow title bar to remain visible
-            
-            // Apply bounds
-            windowElement.style.top = Math.max(minTop, Math.min(maxTop, newTop)) + "px";
-            windowElement.style.left = Math.max(minLeft, Math.min(maxLeft, newLeft)) + "px";
-        }
-        
-        function touchElementDrag(e) {
-            if (e.touches.length === 1) {
-                e.preventDefault();
-                
-                const touch = e.touches[0];
-                
-                pos1 = pos3 - touch.clientX;
-                pos2 = pos4 - touch.clientY;
-                pos3 = touch.clientX;
-                pos4 = touch.clientY;
-                
-                // Keep window within viewport bounds (same logic as mouse drag)
-                const newTop = windowElement.offsetTop - pos2;
-                const newLeft = windowElement.offsetLeft - pos1;
-                
-                const viewportWidth = window.innerWidth;
-                const viewportHeight = window.innerHeight;
-                const windowWidth = windowElement.offsetWidth;
-                const windowHeight = windowElement.offsetHeight;
-                
-                const minLeft = -windowWidth * 0.7;
-                const maxLeft = viewportWidth - windowWidth * 0.3;
-                const minTop = 0;
-                const maxTop = viewportHeight - 40;
-                
-                windowElement.style.top = Math.max(minTop, Math.min(maxTop, newTop)) + "px";
-                windowElement.style.left = Math.max(minLeft, Math.min(maxLeft, newLeft)) + "px";
-            }
-        }
-        
-        function closeDragElement() {
-            document.onmouseup = null;
-            document.onmousemove = null;
-        }
-        
-        function closeTouchDrag() {
-            document.ontouchend = null;
-            document.ontouchmove = null;
-        }
-    }
-    
     // Helper function to get highest z-index
     function getHighestZIndex() {
-        const windows = document.querySelectorAll('.window');
-        let highest = 0;
-        
-        windows.forEach(window => {
-            const zIndex = parseInt(window.style.zIndex || 0);
-            if (zIndex > highest) {
-                highest = zIndex;
-            }
-        });
-        
-        return highest;
+        return Math.max(
+            0,
+            ...Array.from(document.querySelectorAll('.window'))
+                .map(el => parseInt(getComputedStyle(el).zIndex) || 0)
+        );
     }
 });

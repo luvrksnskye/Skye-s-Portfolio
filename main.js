@@ -14,6 +14,7 @@ let playlistTimeout = null;
 function createPlaylist() {
 
     const musicFiles = [
+        'assets/music/Needy Streamer Overload OST - 04 Angel Falling.mp3',
         'assets/music/00.mii-maker.mp3',
         'assets/music/01. Opening Part 1.mp3',
         'assets/music/02. Title Screen.mp3',
@@ -63,7 +64,8 @@ function createPlaylist() {
         'assets/music/46. Ending.mp3',
         'assets/music/creative-exercise.mp3',
         'assets/music/wii-shop.mp3',
-        'assets/music/undertale-shop.mp3'
+        'assets/music/undertale-shop.mp3',
+        'assets/music/SAVE The World.mp3'
     ];
     
     
