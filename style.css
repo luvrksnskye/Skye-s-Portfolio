@@ -324,6 +324,12 @@ body {
   background-image: url('assets/bio.png');
 }
 
+#window-warning .title::before{
+  background-image: url('assets/warning.png');
+}
+#window-stop .title::before{
+  background-image: url('assets/warning.png');
+}
 .title::after {
   content: url('assets/window_buttons2.png');
   float: right;
@@ -1063,3 +1069,27 @@ a:hover {
             width: 90%;
         }
     }
+
+    #window-warning {
+      position: absolute !important; 
+      top: -100px;
+      left: 80%;
+      transform: translateX(-50%); 
+      width: 400px;
+      max-width: 90%;
+      z-index: 10000; 
+    }
+
+    [class^="window-stop"] {
+      position: absolute !important;
+      top: -100px !important;
+      left: 80% !important;
+      transform: translateX(-50%) !important;
+      width: 400px !important;
+      max-width: 90% !important;
+      z-index: 10000 !important;
+  }
+  
+  [class^="window-stop"] .title::before {
+    background-image: url('assets/warning.png');
+}

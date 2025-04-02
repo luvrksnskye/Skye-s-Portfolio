@@ -5,7 +5,53 @@ document.addEventListener("DOMContentLoaded", function() {
     
     const openWindowSound = new Audio("assets/sounds/kari.wav");
     const closeWindowSound = new Audio("assets/sounds/sqek.mp3");
-    const tripSound = new Audio("assets/sounds/trip.mp3"); // You'll need to add this sound
+    const tripSound = new Audio("assets/sounds/trip.mp3"); 
+    
+    // Counter for medication abuse
+    let medicationAbuseCount = 0;
+    
+
+    const warningMessages = [
+        "Stop doing that.",
+        "Those aren't for recreational use.",
+        "I'm watching you.",
+        "That's not how medication works.",
+        "Seriously?",
+        "Do NOT take more than prescribed.",
+        "Those are expensive, you know.",
+        "This is your brain on pixels.",
+        "Digital drugs aren't real drugs.",
+        "Your insurance won't cover this abuse.",
+        "The pharmacy called. They're concerned.",
+        "404: Responsibility not found.",
+        "Error: Human judgment malfunction.",
+        "Are you having fun yet?",
+        "Your digital doctor is disappointed.",
+        "Pixel pills have pixel consequences.",
+        "Side effects include: this warning.",
+        "Your browser history will show this.",
+        "The NSA has noted your activity.",
+        "Try drinking digital water instead."
+    ];
+    
+
+    const angryWarningMessages = [
+        "I SAID STOP!",
+        "THIS IS NOT A GAME!",
+        "DO YOU THINK THIS IS FUNNY?",
+        "MEDICATION ABUSE IS SERIOUS!",
+        "YOUR VIRTUAL LICENSE IS REVOKED!",
+        "THIS IS YOUR LAST WARNING!",
+        "SYSTEM ALERT: USER VIOLATION!",
+        "ENOUGH ALREADY!",
+        "STOP CLICKING THAT BUTTON!",
+        "ADMIN OVERRIDE IMMINENT!",
+        "YOU'RE GOING TO BREAK THE SYSTEM!",
+        "DIGITAL INTERVENTION REQUIRED!",
+        "EMERGENCY SHUTDOWN PROTOCOL INITIATED!",
+        "THIS IS WHY WE CAN'T HAVE NICE THINGS!",
+        "ACCESS WILL BE RESTRICTED!"
+    ];
     
     function createWindow(title, content, windowClass) {
         const existingWindow = document.getElementById(windowClass);
@@ -23,8 +69,8 @@ document.addEventListener("DOMContentLoaded", function() {
         windowElement.className = `window ${windowClass}`;
         windowElement.id = windowClass;
         windowElement.style.position = "absolute";
-        windowElement.style.top = "100px";
-        windowElement.style.left = "50%";
+        windowElement.style.top = "10px";
+        windowElement.style.left = "30%";
         windowElement.style.transform = "translateX(-50%)";
         windowElement.style.width = "500px";
         windowElement.style.zIndex = "10000";
@@ -135,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         return highestZ;
     }
-    
+
     function createDistortionEffect() {
         // Create the distortion overlay
         const overlay = document.createElement('div');
@@ -146,15 +192,17 @@ document.addEventListener("DOMContentLoaded", function() {
             left: 0;
             right: 0;
             bottom: 0;
-            z-index: 99999;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
             pointer-events: none;
-            mix-blend-mode: overlay;
+            mix-blend-mode: difference;
             opacity: 0;
             transition: opacity 1.5s ease-in;
         `;
         document.body.appendChild(overlay);
         
-        // Add video background
+        // Add video background with higher opacity but make it preserve the original background
         const videoBackground = document.createElement('video');
         videoBackground.src = "assets/trip-overlay.mp4";
         videoBackground.autoplay = true;
@@ -167,60 +215,88 @@ document.addEventListener("DOMContentLoaded", function() {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.9;
+            opacity: 0.5; /* Reduced opacity for softer effect */
             mix-blend-mode: screen;
         `;
         overlay.appendChild(videoBackground);
         
-        // Create several visual effects layers with more liquid-like animations
-        for (let i = 0; i < 5; i++) {
+        // Create several visual effects layers with softer, pastel-like animations
+        for (let i = 0; i < 10; i++) {
             const layer = document.createElement('div');
             layer.className = `distortion-layer-${i}`;
+            // Using pastel colors with reduced saturation and increased lightness
             layer.style.cssText = `
                 position: absolute;
                 top: 0;
                 left: 0;
                 right: 0;
                 bottom: 0;
+                z-index: 1000000;
                 background: radial-gradient(
                     circle at ${Math.random() * 100}% ${Math.random() * 100}%, 
-                    hsl(${Math.random() * 360}, 100%, 50%), 
-                    hsl(${Math.random() * 360}, 100%, 50%)
+                    hsla(${Math.random() * 360}, 60%, 85%, 0.4), /* Softer, lighter colors */
+                    hsla(${Math.random() * 360}, 50%, 80%, 0.2)  /* Softer, lighter colors */
                 );
-                opacity: ${0.3 + Math.random() * 0.3};
-                mix-blend-mode: ${['overlay', 'difference', 'screen', 'color-dodge'][Math.floor(Math.random() * 4)]};
-                animation: liquid-distort-${i} 8s infinite alternate ease-in-out;
-                filter: blur(${10 + Math.random() * 15}px) contrast(1.2);
+                opacity: ${0.2 + Math.random() * 0.2}; /* Lower opacity for softer look */
+                mix-blend-mode: ${['overlay', 'soft-light', 'screen'][Math.floor(Math.random() * 3)]};
+                animation: liquid-distort-${i} ${5 + Math.random() * 8}s infinite alternate ease-in-out;
+                filter: blur(${8 + Math.random() * 20}px) contrast(0.9); /* Reduced contrast */
+                transform-origin: ${Math.random() * 100}% ${Math.random() * 100}%;
             `;
             overlay.appendChild(layer);
             
-            // Create keyframe animation for each layer with smoother transitions
+            // Create keyframe animation for each layer with gentler transitions
             const keyframes = `
                 @keyframes liquid-distort-${i} {
                     0% {
-                        transform: translate(${Math.random() * 8 - 4}%, ${Math.random() * 8 - 4}%) scale(${0.9 + Math.random() * 0.3}) rotate(${Math.random() * 5 - 2.5}deg);
-                        filter: hue-rotate(0deg) blur(${10 + Math.random() * 15}px) contrast(1.2);
-                        border-radius: ${Math.random() * 40}% ${Math.random() * 40}% ${Math.random() * 40}% ${Math.random() * 40}%;
+                        transform: translate(${Math.random() * 10 - 5}%, ${Math.random() * 10 - 5}%) scale(${0.8 + Math.random() * 0.5}) rotate(${Math.random() * 10 - 5}deg);
+                        filter: hue-rotate(0deg) blur(${10 + Math.random() * 20}px) contrast(0.9) saturate(0.8);
+                        border-radius: ${30 + Math.random() * 70}% ${30 + Math.random() * 70}% ${30 + Math.random() * 70}% ${30 + Math.random() * 70}%;
+                        background: radial-gradient(
+                            circle at ${Math.random() * 100}% ${Math.random() * 100}%, 
+                            hsla(${Math.random() * 360}, 60%, 85%, 0.4),
+                            hsla(${Math.random() * 360}, 50%, 80%, 0.2)
+                        );
                     }
                     25% {
-                        transform: translate(${Math.random() * 8 - 4}%, ${Math.random() * 8 - 4}%) scale(${0.9 + Math.random() * 0.3}) rotate(${Math.random() * 5 - 2.5}deg);
-                        filter: hue-rotate(90deg) blur(${10 + Math.random() * 15}px) contrast(1.3);
-                        border-radius: ${Math.random() * 40}% ${Math.random() * 40}% ${Math.random() * 40}% ${Math.random() * 40}%;
+                        transform: translate(${Math.random() * 10 - 5}%, ${Math.random() * 10 - 5}%) scale(${0.8 + Math.random() * 0.5}) rotate(${Math.random() * 10 - 5}deg);
+                        filter: hue-rotate(90deg) blur(${10 + Math.random() * 20}px) contrast(0.9) saturate(0.8);
+                        border-radius: ${30 + Math.random() * 70}% ${30 + Math.random() * 70}% ${30 + Math.random() * 70}% ${30 + Math.random() * 70}%;
+                        background: radial-gradient(
+                            circle at ${Math.random() * 100}% ${Math.random() * 100}%, 
+                            hsla(${Math.random() * 360}, 60%, 85%, 0.4),
+                            hsla(${Math.random() * 360}, 50%, 80%, 0.2)
+                        );
                     }
                     50% {
-                        transform: translate(${Math.random() * 8 - 4}%, ${Math.random() * 8 - 4}%) scale(${0.9 + Math.random() * 0.3}) rotate(${Math.random() * 5 - 2.5}deg);
-                        filter: hue-rotate(180deg) blur(${10 + Math.random() * 15}px) contrast(1.4);
-                        border-radius: ${Math.random() * 40}% ${Math.random() * 40}% ${Math.random() * 40}% ${Math.random() * 40}%;
+                        transform: translate(${Math.random() * 10 - 5}%, ${Math.random() * 10 - 5}%) scale(${0.8 + Math.random() * 0.5}) rotate(${Math.random() * 10 - 5}deg);
+                        filter: hue-rotate(180deg) blur(${10 + Math.random() * 20}px) contrast(0.9) saturate(0.8);
+                        border-radius: ${30 + Math.random() * 70}% ${30 + Math.random() * 70}% ${30 + Math.random() * 70}% ${30 + Math.random() * 70}%;
+                        background: radial-gradient(
+                            circle at ${Math.random() * 100}% ${Math.random() * 100}%, 
+                            hsla(${Math.random() * 360}, 60%, 85%, 0.4),
+                            hsla(${Math.random() * 360}, 50%, 80%, 0.2)
+                        );
                     }
                     75% {
-                        transform: translate(${Math.random() * 8 - 4}%, ${Math.random() * 8 - 4}%) scale(${0.9 + Math.random() * 0.3}) rotate(${Math.random() * 5 - 2.5}deg);
-                        filter: hue-rotate(270deg) blur(${10 + Math.random() * 15}px) contrast(1.3);
-                        border-radius: ${Math.random() * 40}% ${Math.random() * 40}% ${Math.random() * 40}% ${Math.random() * 40}%;
+                        transform: translate(${Math.random() * 10 - 5}%, ${Math.random() * 10 - 5}%) scale(${0.8 + Math.random() * 0.5}) rotate(${Math.random() * 10 - 5}deg);
+                        filter: hue-rotate(270deg) blur(${10 + Math.random() * 20}px) contrast(0.9) saturate(0.8);
+                        border-radius: ${30 + Math.random() * 70}% ${30 + Math.random() * 70}% ${30 + Math.random() * 70}% ${30 + Math.random() * 70}%;
+                        background: radial-gradient(
+                            circle at ${Math.random() * 100}% ${Math.random() * 100}%, 
+                            hsla(${Math.random() * 360}, 60%, 85%, 0.4),
+                            hsla(${Math.random() * 360}, 50%, 80%, 0.2)
+                        );
                     }
                     100% {
-                        transform: translate(${Math.random() * 8 - 4}%, ${Math.random() * 8 - 4}%) scale(${0.9 + Math.random() * 0.3}) rotate(${Math.random() * 5 - 2.5}deg);
-                        filter: hue-rotate(360deg) blur(${10 + Math.random() * 15}px) contrast(1.2);
-                        border-radius: ${Math.random() * 40}% ${Math.random() * 40}% ${Math.random() * 40}% ${Math.random() * 40}%;
+                        transform: translate(${Math.random() * 10 - 5}%, ${Math.random() * 10 - 5}%) scale(${0.8 + Math.random() * 0.5}) rotate(${Math.random() * 10 - 5}deg);
+                        filter: hue-rotate(360deg) blur(${10 + Math.random() * 20}px) contrast(0.9) saturate(0.8);
+                        border-radius: ${30 + Math.random() * 70}% ${30 + Math.random() * 70}% ${30 + Math.random() * 70}% ${30 + Math.random() * 70}%;
+                        background: radial-gradient(
+                            circle at ${Math.random() * 100}% ${Math.random() * 100}%, 
+                            hsla(${Math.random() * 360}, 60%, 85%, 0.4),
+                            hsla(${Math.random() * 360}, 50%, 80%, 0.2)
+                        );
                     }
                 }
             `;
@@ -230,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.head.appendChild(style);
         }
         
-        // Create distortion canvas with WebGL for more advanced effects
+        // Create distortion canvas with WebGL-like effects
         const canvas = document.createElement('canvas');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -240,17 +316,60 @@ document.addEventListener("DOMContentLoaded", function() {
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 100000;
+            z-index: 11;
             pointer-events: none;
             mix-blend-mode: overlay;
-            opacity: 0.5;
+            opacity: 0.4; /* Lower opacity for softer effect */
         `;
         overlay.appendChild(canvas);
         
-        // Create liquid bubble shapes that float around
-        for (let i = 0; i < 15; i++) {
+        // Add pulsating warp effect with softer colors
+        const warpOverlay = document.createElement('div');
+        warpOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 12;
+            pointer-events: none;
+            animation: screen-warp 8s infinite alternate ease-in-out;
+            opacity: 0.3; /* Lower opacity for softer effect */
+            mix-blend-mode: soft-light;
+        `;
+        overlay.appendChild(warpOverlay);
+        
+        const warpStyle = document.createElement('style');
+        warpStyle.innerHTML = `
+            @keyframes screen-warp {
+                0% {
+                    backdrop-filter: hue-rotate(0deg) blur(0px) contrast(0.9);
+                    background: radial-gradient(circle at center, transparent, rgba(255, 180, 255, 0.45));
+                }
+                25% {
+                    backdrop-filter: hue-rotate(90deg) blur(2px) contrast(0.9);
+                    background: radial-gradient(circle at 70% 30%, transparent, rgba(180, 255, 255, 0.4));
+                }
+                50% {
+                    backdrop-filter: hue-rotate(180deg) blur(4px) contrast(0.9);
+                    background: radial-gradient(circle at 30% 70%, transparent, rgba(255, 255, 180, 0.47));
+                }
+                75% {
+                    backdrop-filter: hue-rotate(270deg) blur(2px) contrast(0.9);
+                    background: radial-gradient(circle at 40% 40%, transparent, rgba(180, 255, 180, 0.44));
+                }
+                100% {
+                    backdrop-filter: hue-rotate(360deg) blur(0px) contrast(0.9);
+                    background: radial-gradient(circle at center, transparent, rgba(255, 180, 180, 0.41));
+                }
+            }
+        `;
+        document.head.appendChild(warpStyle);
+        
+        // Create softer liquid bubble shapes
+        for (let i = 0; i < 20; i++) {
             const bubble = document.createElement('div');
-            const size = 60 + Math.random() * 140;
+            const size = 40 + Math.random() * 160;
             
             bubble.style.cssText = `
                 position: fixed;
@@ -258,15 +377,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 height: ${size}px;
                 top: ${Math.random() * 100}%;
                 left: ${Math.random() * 100}%;
-                background-color: hsl(${Math.random() * 360}, 100%, 50%);
-                opacity: ${0.2 + Math.random() * 0.2};
-                mix-blend-mode: ${['overlay', 'difference', 'screen', 'color-dodge'][Math.floor(Math.random() * 4)]};
-                filter: blur(${5 + Math.random() * 15}px);
-                z-index: ${100000 + i};
+                background-color: hsla(${Math.random() * 360}, 60%, 85%, 0.3); /* Softer, lighter colors */
+                opacity: ${0.15 + Math.random() * 0.25}; /* Lower opacity for softer effect */
+                mix-blend-mode: ${['overlay', 'soft-light', 'screen'][Math.floor(Math.random() * 3)]};
+                filter: blur(${5 + Math.random() * 20}px) contrast(0.9) saturate(0.8);
+                z-index: ${20 + i};
                 pointer-events: none;
-                animation: liquid-bubble-${i} ${5 + Math.random() * 10}s infinite alternate ease-in-out;
-                border-radius: 50%;
-                box-shadow: inset 0 0 ${10 + Math.random() * 30}px rgba(255, 255, 255, 0.5);
+                animation: liquid-bubble-${i} ${4 + Math.random() * 15}s infinite alternate ease-in-out;
+                border-radius: ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}%;
+                box-shadow: 
+                    inset 0 0 ${30 + Math.random() * 70}px rgba(255, 255, 255, 0.3),
+                    0 0 ${20 + Math.random() * 30}px rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.2);
             `;
                 
             overlay.appendChild(bubble);
@@ -274,24 +395,34 @@ document.addEventListener("DOMContentLoaded", function() {
             const bubbleKeyframes = `
                 @keyframes liquid-bubble-${i} {
                     0% {
-                        transform: translate(0, 0) scale(1);
-                        background-color: hsl(${Math.random() * 360}, 100%, 50%);
-                        border-radius: 50%;
-                    }
-                    33% {
-                        transform: translate(${Math.random() * 150 - 75}px, ${Math.random() * 150 - 75}px) scale(${0.7 + Math.random() * 0.6});
-                        background-color: hsl(${Math.random() * 360}, 100%, 50%);
+                        transform: translate(0, 0) scale(1) rotate(0deg);
+                        background-color: hsla(${Math.random() * 360}, 60%, 85%, 0.3);
                         border-radius: ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}%;
+                        filter: blur(${5 + Math.random() * 10}px) saturate(0.8) hue-rotate(0deg);
                     }
-                    66% {
-                        transform: translate(${Math.random() * 150 - 75}px, ${Math.random() * 150 - 75}px) scale(${0.7 + Math.random() * 0.6});
-                        background-color: hsl(${Math.random() * 360}, 100%, 50%);
+                    25% {
+                        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(${0.6 + Math.random() * 0.8}) rotate(${Math.random() * 40 - 20}deg);
+                        background-color: hsla(${Math.random() * 360}, 60%, 85%, 0.3);
                         border-radius: ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}%;
+                        filter: blur(${5 + Math.random() * 10}px) saturate(0.8) hue-rotate(90deg);
+                    }
+                    50% {
+                        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(${0.6 + Math.random() * 0.8}) rotate(${Math.random() * 40 - 20}deg);
+                        background-color: hsla(${Math.random() * 360}, 60%, 85%, 0.3);
+                        border-radius: ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}%;
+                        filter: blur(${5 + Math.random() * 10}px) saturate(0.8) hue-rotate(180deg);
+                    }
+                    75% {
+                        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(${0.6 + Math.random() * 0.8}) rotate(${Math.random() * 40 - 20}deg);
+                        background-color: hsla(${Math.random() * 360}, 60%, 85%, 0.3);
+                        border-radius: ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}%;
+                        filter: blur(${5 + Math.random() * 10}px) saturate(0.8) hue-rotate(270deg);
                     }
                     100% {
-                        transform: translate(${Math.random() * 150 - 75}px, ${Math.random() * 150 - 75}px) scale(${0.7 + Math.random() * 0.6});
-                        background-color: hsl(${Math.random() * 360}, 100%, 50%);
+                        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(${0.6 + Math.random() * 0.8}) rotate(${Math.random() * 40 - 20}deg);
+                        background-color: hsla(${Math.random() * 360}, 60%, 85%, 0.3);
                         border-radius: ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}% ${40 + Math.random() * 60}%;
+                        filter: blur(${5 + Math.random() * 10}px) saturate(0.8) hue-rotate(360deg);
                     }
                 }
             `;
@@ -301,56 +432,398 @@ document.addEventListener("DOMContentLoaded", function() {
             document.head.appendChild(bubbleStyle);
         }
         
- // Use the proper trippy sound
-const tripSound = new Audio("assets/sounds/trippy.mp3");
-tripSound.volume = 0.5;
-tripSound.play();
-
-// Fade in the overlay
-setTimeout(() => {
-    overlay.style.opacity = '1';
-}, 10);
-
-// Start the fade out transition 3 seconds before the effect ends
-setTimeout(() => {
-    overlay.style.transition = 'opacity 3s ease-out';
-    overlay.style.opacity = '0';
-    
-    // Also start fading out the sound
-    const fadeAudio = setInterval(() => {
-        // Reduce volume by 0.05 every 100ms
-        if (tripSound.volume > 0.05) {
-            tripSound.volume -= 0.05;
-        } else {
-            tripSound.volume = 0;
-            clearInterval(fadeAudio);
+        // Add 3D effect with softer geometric shapes
+        for (let i = 0; i < 10; i++) {
+            const geo = document.createElement('div');
+            const size = 30 + Math.random() * 100;
+            const shape = Math.random() > 0.5 ? 'polygon' : 'circle';
+            
+            if (shape === 'polygon') {
+                const sides = 3 + Math.floor(Math.random() * 5); // 3 to 7 sides
+                const points = Array.from({length: sides}, (_, i) => {
+                    const angle = (i / sides) * Math.PI * 2;
+                    const radius = 50 + Math.random() * 10;
+                    const x = 50 + Math.cos(angle) * radius;
+                    const y = 50 + Math.sin(angle) * radius;
+                    return `${x}% ${y}%`;
+                }).join(', ');
+                
+                geo.style.clipPath = `polygon(${points})`;
+            } else {
+                geo.style.borderRadius = Math.random() > 0.5 ? '50%' : 
+                    `${20 + Math.random() * 80}% ${20 + Math.random() * 80}% ${20 + Math.random() * 80}% ${20 + Math.random() * 80}%`;
+            }
+            
+            geo.style.cssText += `
+                position: fixed;
+                width: ${size}px;
+                height: ${size}px;
+                top: ${Math.random() * 100}%;
+                left: ${Math.random() * 100}%;
+                background: linear-gradient(
+                    ${Math.random() * 360}deg,
+                    hsla(${Math.random() * 360}, 60%, 85%, 0.3), /* Softer, lighter colors */
+                    hsla(${Math.random() * 360}, 50%, 80%, 0.2)  /* Softer, lighter colors */
+                );
+                opacity: ${0.1 + Math.random() * 0.2}; /* Lower opacity for softer effect */
+                mix-blend-mode: ${['overlay', 'soft-light', 'screen'][Math.floor(Math.random() * 3)]};
+                filter: blur(${Math.random() * 5}px);
+                z-index: ${30 + i};
+                pointer-events: none;
+                animation: geo-float-${i} ${8 + Math.random() * 15}s infinite alternate ease-in-out;
+                transform-style: preserve-3d;
+                box-shadow: 
+                    inset 0 0 ${10 + Math.random() * 30}px rgba(255, 255, 255, 0.3),
+                    0 0 ${5 + Math.random() * 15}px rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.3);
+            `;
+                
+            overlay.appendChild(geo);
+            
+            const geoKeyframes = `
+                @keyframes geo-float-${i} {
+                    0% {
+                        transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                        filter: hue-rotate(0deg) brightness(1);
+                    }
+                    33% {
+                        transform: translate3d(${Math.random() * 300 - 150}px, ${Math.random() * 300 - 150}px, ${Math.random() * 200}px) 
+                                  rotateX(${Math.random() * 360}deg) rotateY(${Math.random() * 360}deg) rotateZ(${Math.random() * 360}deg);
+                        filter: hue-rotate(120deg) brightness(1.1);
+                    }
+                    66% {
+                        transform: translate3d(${Math.random() * 300 - 150}px, ${Math.random() * 300 - 150}px, ${Math.random() * 200}px) 
+                                  rotateX(${Math.random() * 360}deg) rotateY(${Math.random() * 360}deg) rotateZ(${Math.random() * 360}deg);
+                        filter: hue-rotate(240deg) brightness(1.2);
+                    }
+                    100% {
+                        transform: translate3d(${Math.random() * 300 - 150}px, ${Math.random() * 300 - 150}px, ${Math.random() * 200}px) 
+                                  rotateX(${Math.random() * 360}deg) rotateY(${Math.random() * 360}deg) rotateZ(${Math.random() * 360}deg);
+                        filter: hue-rotate(360deg) brightness(1.1);
+                    }
+                }
+            `;
+            
+            const geoStyle = document.createElement('style');
+            geoStyle.innerHTML = geoKeyframes;
+            document.head.appendChild(geoStyle);
         }
-    }, 100);
-}, 12000); // 15 - 3 = 12 seconds
-
-// Remove all effects after 15 seconds
-setTimeout(() => {
-    overlay.remove();
-    videoBackground.pause();
-    Array.from(document.querySelectorAll('style')).forEach(style => {
-        if (style.innerHTML.includes('liquid-distort-') || 
-            style.innerHTML.includes('liquid-bubble-')) {
-            style.remove();
+        
+        // Add softer pulsating glow effect
+        const pulseOverlay = document.createElement('div');
+        pulseOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 40;
+            pointer-events: none;
+            animation: pulse-glow 5s infinite alternate ease-in-out;
+            mix-blend-mode: screen;
+        `;
+        overlay.appendChild(pulseOverlay);
+        
+        const pulseStyle = document.createElement('style');
+        pulseStyle.innerHTML = `
+            @keyframes pulse-glow {
+                0% {
+                    box-shadow: inset 0 0 200px rgba(255, 180, 255, 0.44);
+                }
+                33% {
+                    box-shadow: inset 0 0 200px rgba(255, 180, 212, 0.37);
+                }
+                66% {
+                    box-shadow: inset 0 0 200px rgba(255, 255, 180, 0.38);
+                }
+                100% {
+                    box-shadow: inset 0 0 200px rgba(195, 180, 255, 0.34);
+                }
+            }
+        `;
+        document.head.appendChild(pulseStyle);
+        
+        // Add wavy text effect with softer colors
+        const textOverlay = document.createElement('div');
+        textOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 50;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.3; /* Lower opacity for softer effect */
+            transform: translateZ(0);
+        `;
+        
+        // Generate random characters with softer colors
+        for (let i = 0; i < 50; i++) {
+            const character = document.createElement('div');
+            character.textContent = String.fromCharCode(33 + Math.floor(Math.random() * 93));
+            character.style.cssText = `
+                position: absolute;
+                font-family: 'kawaii', sans-serif;
+                font-size: ${20 + Math.random() * 60}px;
+                color: hsla(${Math.random() * 360}, 60%, 85%, 0.4); /* Softer, lighter colors */
+                text-shadow: 0 0 10px currentColor;
+                opacity: ${0.1 + Math.random() * 0.2}; /* Lower opacity */
+                left: ${Math.random() * 100}%;
+                top: ${Math.random() * 100}%;
+                animation: float-char-${i} ${10 + Math.random() * 20}s infinite alternate ease-in-out;
+                transform-origin: center;
+            `;
+            textOverlay.appendChild(character);
+            
+            const charKeyframes = `
+                @keyframes float-char-${i} {
+                    0% {
+                        transform: translate(0, 0) rotate(0deg) scale(1);
+                        color: hsla(${Math.random() * 360}, 60%, 85%, 0.4);
+                        text-shadow: 0 0 10px currentColor;
+                    }
+                    25% {
+                        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) rotate(${Math.random() * 360}deg) scale(${0.5 + Math.random() * 2});
+                        color: hsla(${Math.random() * 360}, 60%, 85%, 0.4);
+                        text-shadow: 0 0 ${10 + Math.random() * 20}px currentColor;
+                    }
+                    50% {
+                        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) rotate(${Math.random() * 360}deg) scale(${0.5 + Math.random() * 2});
+                        color: hsla(${Math.random() * 360}, 60%, 85%, 0.4);
+                        text-shadow: 0 0 ${10 + Math.random() * 20}px currentColor;
+                    }
+                    75% {
+                        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) rotate(${Math.random() * 360}deg) scale(${0.5 + Math.random() * 2});
+                        color: hsla(${Math.random() * 360}, 60%, 85%, 0.4);
+                        text-shadow: 0 0 ${10 + Math.random() * 20}px currentColor;
+                    }
+                    100% {
+                        transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) rotate(${Math.random() * 360}deg) scale(${0.5 + Math.random() * 2});
+                        color: hsla(${Math.random() * 360}, 60%, 85%, 0.4);
+                        text-shadow: 0 0 ${10 + Math.random() * 20}px currentColor;
+                    }
+                }
+            `;
+            
+            const charStyle = document.createElement('style');
+            charStyle.innerHTML = charKeyframes;
+            document.head.appendChild(charStyle);
+            
+            // Make characters change randomly
+            setInterval(() => {
+                character.textContent = String.fromCharCode(33 + Math.floor(Math.random() * 93));
+            }, 300 + Math.random() * 3000);
         }
-    });
-    
-    // Remove any shapes we created
-    document.querySelectorAll('div').forEach(div => {
-        if (div.style.mixBlendMode && div.style.pointerEvents === 'none' && 
-            div.parentElement && div.parentElement.className === 'distortion-overlay') {
-            div.remove();
+        
+        overlay.appendChild(textOverlay);
+        
+        // Use the proper trippy sound
+        const tripSound = new Audio("assets/sounds/trippy.mp3");
+        tripSound.volume = 0.5;
+        tripSound.play();
+        
+        // Special handling for the background to ensure it stays completely fixed
+        const fixedBackground = document.querySelector('.fixed-background');
+        if (fixedBackground) {
+            // Save original styles
+            const originalBackgroundStyle = {
+                zIndex: fixedBackground.style.zIndex,
+                filter: fixedBackground.style.filter,
+                transform: fixedBackground.style.transform
+            };
+            
+            // Only enhance the colors without moving the background
+            fixedBackground.style.zIndex = "-1"; // Keep it behind the overlay
+            fixedBackground.style.filter = "saturate(1.1) contrast(1.05)"; // More subtle color enhancement
+            // DO NOT modify transform property of the background
+            
+            // Restore original background properties after effect ends
+            setTimeout(() => {
+                fixedBackground.style.zIndex = originalBackgroundStyle.zIndex;
+                fixedBackground.style.filter = originalBackgroundStyle.filter;
+            }, 15000);
         }
-    });
+        
+        // Fade in the overlay
+        setTimeout(() => {
+            overlay.style.opacity = '1';
+        }, 10);
+        
+        // Start the fade out transition 3 seconds before the effect ends
+        setTimeout(() => {
+            overlay.style.transition = 'opacity 3s ease-out';
+            overlay.style.opacity = '0';
+            
+            // Also start fading out the sound
+            const fadeAudio = setInterval(() => {
+                // Reduce volume by 0.05 every 100ms
+                if (tripSound.volume > 0.05) {
+                    tripSound.volume -= 0.05;
+                } else {
+                    tripSound.volume = 0;
+                    clearInterval(fadeAudio);
+                }
+            }, 100);
+        }, 6000); // Reduced time before transition to black screen
+        
+        // Create black screen effect after the trippy animation
+        setTimeout(() => {
+            // Remove the trippy overlay
+            overlay.remove();
+            
+            // Create black screen overlay
+            const blackScreen = document.createElement('div');
+            blackScreen.className = 'black-screen-overlay';
+            blackScreen.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: black;
+                z-index: 100000;
+                opacity: 0;
+                transition: opacity 1s ease-in;
+            `;
+            document.body.appendChild(blackScreen);
+            
+            // Fade in black screen
+            setTimeout(() => {
+                blackScreen.style.opacity = '1';
+                
+                // Close the medication window if it exists
+                const medicationWindow = document.getElementById('window-medication');
+                if (medicationWindow) {
+                    closeWindow(medicationWindow);
+                }
+                
+            }, 100);
+            
+            // After black screen is fully visible, wait then fade it out
+            setTimeout(() => {
+                blackScreen.style.transition = 'opacity 1s ease-out';
+                blackScreen.style.opacity = '0';
+                
+                // Show warning after black screen starts fading
+                setTimeout(() => {
+                    // Get random warning message
+                    let randomMessage;
+                    if (medicationAbuseCount >= 3) {
+                        // Use angrier messages after 3 abuses
+                        randomMessage = angryWarningMessages[Math.floor(Math.random() * angryWarningMessages.length)];
+                    } else {
+                        randomMessage = warningMessages[Math.floor(Math.random() * warningMessages.length)];
+                    }
+                    
+                    // Create warning window
+                    const warningContent = `
+                        <div style="display: flex; flex-direction: column; align-items: center; padding: 20px;">
+                            <div style="font-size: 20px; color: #d32f2f; margin-bottom: 15px; font-weight: bold;">
+                                ${randomMessage}
+                            </div>
+                            <img src="assets/warning.png" style="width: 100px; margin-bottom: 20px;">
+                            <div style="font-size: 16px; text-align: center;">
+                                Digital medication should be taken as directed.
+                                <br><br>
+                                Side effects may include: file corruption, data loss, 
+                                and disappointed operating systems.
+                            </div>
+                        </div>
+                    `;
+                    
+                    createWindow("WARNING", warningContent, "window-warning");
+                    
+                }, 500);
+                
+                // Remove black screen after fade out
+                setTimeout(() => {
+                    blackScreen.remove();
+                    
+                    // Clean up any remaining effects
+                    Array.from(document.querySelectorAll('style')).forEach(style => {
+                        if (style.innerHTML.includes('liquid-distort-') || 
+                            style.innerHTML.includes('liquid-bubble-') ||
+                            style.innerHTML.includes('geo-float-') ||
+                            style.innerHTML.includes('float-char-') ||
+                            style.innerHTML.includes('screen-warp') ||
+                            style.innerHTML.includes('pulse-glow')) {
+                            style.remove();
+                        }
+                    });
+                    
+                    // Remove any shapes we created
+                    document.querySelectorAll('div').forEach(div => {
+                        if (div.style.mixBlendMode && div.style.pointerEvents === 'none' && 
+                            div.parentElement && div.parentElement.className === 'distortion-overlay') {
+                            div.remove();
+                        }
+                    });
+                    
+                    // Make sure the trip sound is stopped
+                    tripSound.pause();
+                    tripSound.currentTime = 0;
+                    
+                }, 2000);
+                
+            }, 3000); // Show black screen for 3 seconds
+            
+        }, 9000); // Time to start black screen transition
+    }
     
-    // The sound should already be faded out, now stop it completely
-    tripSound.pause();
-    tripSound.currentTime = 0;
-}, 60000);
+    function makeWindowEscape(windowElement) {
+        const originalPosition = {
+            x: parseFloat(windowElement.getAttribute('data-x')) || 0,
+            y: parseFloat(windowElement.getAttribute('data-y')) || 0
+        };
+        
+        // Get cursor position from event
+        document.addEventListener('mousemove', function(e) {
+            // If window doesn't exist anymore, remove listener
+            if (!document.body.contains(windowElement)) {
+                document.removeEventListener('mousemove', this);
+                return;
+            }
+            
+            // Get window position and dimensions
+            const windowRect = windowElement.getBoundingClientRect();
+            
+            // Calculate center of window
+            const windowCenterX = windowRect.left + windowRect.width / 2;
+            const windowCenterY = windowRect.top + windowRect.height / 2;
+            
+            // Calculate distance between cursor and window center
+            const dx = e.clientX - windowCenterX;
+            const dy = e.clientY - windowCenterY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            // If cursor is getting close, move away
+            if (distance < 200) {
+                // Calculate escape direction (opposite of cursor)
+                const escapeX = -dx * (1 - distance / 200) * 10;
+                const escapeY = -dy * (1 - distance / 200) * 10;
+                
+                // Update window position
+                const newX = originalPosition.x + escapeX;
+                const newY = originalPosition.y + escapeY;
+                
+                // Keep window within viewport bounds
+                const maxX = window.innerWidth - windowRect.width;
+                const maxY = window.innerHeight - windowRect.height;
+                const boundedX = Math.max(0, Math.min(maxX, newX));
+                const boundedY = Math.max(0, Math.min(maxY, newY));
+                
+                // Apply new position
+                windowElement.style.transform = `translate(${boundedX}px, ${boundedY}px)`;
+                windowElement.setAttribute('data-x', boundedX);
+                windowElement.setAttribute('data-y', boundedY);
+                
+                // Update originalPosition to avoid jumps
+                originalPosition.x = boundedX;
+                originalPosition.y = boundedY;
+            }
+        });
     }
     
     const youtubeContent = `
@@ -571,24 +1044,88 @@ setTimeout(() => {
                 
                 if (medicationImg) {
                     medicationImg.addEventListener('click', shakeMedication);
-                }
-                
-                if (medicationBtn) {
-                    // Replace the normal click function with the distortion effect
+                  }
+            
+                  if (medicationBtn) {
+                    let angryMessageCount = 0;
                     medicationBtn.addEventListener('click', function() {
-                        // Play a more psychedelic sound
-                        const tripSound = new Audio("assets/sounds/kari.wav");
-                        tripSound.playbackRate = 0.5;
-                        tripSound.volume = 0.7;
-                        tripSound.play();
-                        
-                        // Trigger the extreme distortion effect
-                        createDistortionEffect();
+                      medicationAbuseCount++;
+            
+                      if (medicationAbuseCount >= 3) {
+                        makeWindowEscape(medicationWindow);
+                      }
+            
+                      if (medicationAbuseCount >= 4) {
+                        angryMessageCount++;
+                        const angryMessage = angryWarningMessages[angryMessageCount % angryWarningMessages.length];
+                        const angryDiv = document.createElement('div');
+                        angryDiv.style.position = 'fixed';
+                        angryDiv.style.top = '50%';
+                        angryDiv.style.left = '50%';
+                        angryDiv.style.transform = 'translate(-50%, -50%)';
+                        angryDiv.style.fontSize = '40px';
+                        angryDiv.style.color = 'red';
+                        angryDiv.style.zIndex = '10000';
+                        angryDiv.textContent = angryMessage;
+                        document.body.appendChild(angryDiv);
+            
+                        setTimeout(() => {
+                          angryDiv.remove();
+                        }, 2000);
+                      }
+            
+                      if (medicationAbuseCount >= 6) {
+                        const errorSound = new Audio("assets/sounds/sqek.mp3");
+                        errorSound.volume = 0.7;
+                        errorSound.play();
+            
+                        const redOverlay = document.createElement('div');
+                        redOverlay.style.cssText = `
+                          position: fixed;
+                          top: 0;
+                          left: 0;
+                          right: 0;
+                          bottom: 0;
+                          background-color: rgba(255, 0, 0, 0.2);
+                          z-index: 99999;
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          font-size: 80px;
+                          font-weight: bold;
+                          color: red;
+                          text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+                          pointer-events: none;
+                          opacity: 0;
+                          transition: opacity 0.5s ease;
+                        `;
+                        redOverlay.textContent = "STOP";
+                        document.body.appendChild(redOverlay);
+            
+                        setTimeout(() => {
+                          redOverlay.style.opacity = "1";
+                          setTimeout(() => {
+                            redOverlay.style.opacity = "0";
+                            setTimeout(() => {
+                              redOverlay.remove();
+                            }, 500);
+                          }, 300);
+                        }, 10);
+            
+                        return;
+                      }
+            
+                      const tripSound = new Audio("assets/sounds/kari.wav");
+                      tripSound.playbackRate = 0.5;
+                      tripSound.volume = 0.7;
+                      tripSound.play();
+            
+                      createDistortionEffect();
                     });
-                }
-            }, 100);
-        });
-    }
+                  }
+                }, 100);
+              });
+            }
     
     
     document.querySelectorAll('.desktop-icon').forEach(icon => {
