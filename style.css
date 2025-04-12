@@ -185,6 +185,7 @@
     border-radius: 10px;
     transition: all 0.2s ease;
     cursor: grab; /* Add a grab cursor */
+    box-sizing: border-box;
     background: linear-gradient(to bottom right, var(--skye-inactive-color), var(--skye-outer-color));
   }
   
@@ -327,6 +328,7 @@
     color: var(--skye-window-text-color);
     margin-top: 4px;
     border-radius: 7px;
+    box-sizing: border-box;
   }
   
   .window .content::before {
@@ -340,6 +342,24 @@
     opacity: 0.3;
     pointer-events: none;
   }
+
+  /* Window content heights */
+.window-about .content {
+  height: 300px; 
+}
+
+.window-projects .content {
+  height: 500px; 
+}
+
+.window-info .content{
+  height: 370px;
+}
+
+.window-trash .content{
+  height: 380px;
+}
+
   
   /* Popup windows positions */
   #info-popup-window, 
@@ -970,11 +990,11 @@
     
     .window .content {
       height: auto;
-      max-height: 300px;
+      max-height: 350px;
     }
     
     .window-about .content {
-      max-height: 400px;
+      max-height: 350px;
     }
     
     .window-projects .content {
