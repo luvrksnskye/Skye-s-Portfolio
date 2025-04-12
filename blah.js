@@ -598,7 +598,7 @@ document.addEventListener("DOMContentLoaded", function() {
         tripSound.volume = 0.5;
         tripSound.play();
         
-        const fixedBackground = document.querySelector('.fixed-background');
+        const fixedBackground = document.querySelector('.responsive-background');
         if (fixedBackground) {
             const originalBackgroundStyle = {
                 zIndex: fixedBackground.style.zIndex,

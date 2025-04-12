@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('.fixed-background').style.backgroundImage = 'url("assets/background/morning.png")';
+    document.querySelector('.responsive-background').style.backgroundImage = 'url("assets/background/morning.png")';
 
     const desktopIcons = document.querySelectorAll('.desktop-icon');
     
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Change background after fade completes
                     setTimeout(() => {
                         // Change the background
-                        document.querySelector('.fixed-background').style.backgroundImage = `url("${option.background}")`;
+                        document.querySelector('.responsive-background').style.backgroundImage = `url("${option.background}")`;
                         
                         // Begin fade out
                         setTimeout(() => {
